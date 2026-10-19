@@ -1,54 +1,69 @@
-const { findUid: getFBID } = global.utils;
-const webUrlRegex = /^(https?:\/\/[^\s]+)$/;
-
+const { findUid } = global.utils;
+const regExCheckURL = /^(http|https):\/\/[^ "]+$/;
 module.exports = {
-  config: {
-    name: "uid",
-    version: "2.0",
-    author: "ntkhanki",
-    role: 0,
-    shortDescription: {
-      en: "Extract Facebook UID"
-    },
-    longDescription: {
-      en: "A versatile tool to get UIDs from profile links, mentions, or message replies."
-    },
-    category: "utility",
-    guide: {
-      en: "{pn} | [tag] | [link] | reply"
-    }
-  },
-
-  onStart: async function ({ message, event, args }) {
-    const { senderID: myID, messageReply: replyData, mentions: taggedUsers } = event;
-
-    if (replyData) {
-      return message.reply(replyData.senderID);
-    }
-
-    if (args.length === 0) {
-      return message.reply(myID);
-    }
-
-    if (webUrlRegex.test(args[0])) {
-      let responseMsg = "";
-      for (const inputLink of args) {
-        try {
-          const retrievedUid = await getFBID(inputLink);
-          responseMsg += `${retrievedUid}\n`;
-        } catch (error) {
-          responseMsg += `⚠️ Failed: ${error.message || "Invalid Link"}\n`;
-        }
-      }
-      return message.reply(responseMsg.trim());
-    }
-
-    const taggedKeys = Object.keys(taggedUsers);
-    if (taggedKeys.length > 0) {
-      const allMentionedIds = taggedKeys.join("\n");
-      return message.reply(allMentionedIds);
-    }
-
-    return message.reply("Invalid input. Use a link, tag someone, or reply to a message.");
-  }
+	config: {
+		name: "uid",
+		version: "1.3",
+		author: "NTKhang", // by Fahad Islam 
+		countDown: 2,
+		role: 0,
+		description: {
+			vi: "Chia sẻ contact thẻ bài chứa UID của người dùng",
+			en: "Share contact card containing user's UID"
+		},
+		category: "box chat",
+		guide: {
+			vi: "   {pn}: dùng để gửi card id facebook của bạn"
+				+ "\n   {pn} @tag: chia sẻ contact card của người được tag"
+				+ "\n   {pn} <link profile>: chia sẻ contact card từ link profile"
+				+ "\n   Phản hồi tin nhắn kèm lệnh để chia sẻ contact card của họ",
+			en: "   {pn}: use to share your facebook contact card"
+				+ "\n   {pn} @tag: share contact card of tagged people"
+				+ "\n   {pn} <profile link>: share contact card from profile link"
+				+ "\n   Reply to someone's message with the command to share their contact card"
+		}
+	},
+	langs: {
+		vi: {
+			syntaxError: "Vui lòng tag người muốn xem uid hoặc để trống để xem uid của bản thân"
+		},
+		en: {
+			syntaxError: "Please tag the person you want to view uid or leave it blank to view your own uid"
+		}
+	},
+	onStart: async function ({ api, message, event, args, getLang }) {
+		const { threadID, senderID, messageReply, mentions } = event;
+		const sendContactCard = async (targetID) => {
+			if (typeof api.shareContact === "function") {
+				return api.shareContact(targetID, targetID, threadID);
+			} else {
+				return message.reply(targetID);
+			}
+		};
+		if (messageReply) {
+			return await sendContactCard(messageReply.senderID);
+		}
+		if (!args[0]) {
+			return await sendContactCard(senderID);
+		}
+		if (args[0].match(regExCheckURL)) {
+			for (const link of args) {
+				try {
+					const uid = await findUid(link);
+					await sendContactCard(uid);
+				} catch (e) {
+					message.reply(`Error finding UID for ${link}: ${e.message}`);
+				}
+			}
+			return;
+		}
+		const mentionKeys = Object.keys(mentions);
+		if (mentionKeys.length > 0) {
+			for (const id of mentionKeys) {
+				await sendContactCard(id);
+			}
+			return;
+		}
+		return message.reply(getLang("syntaxError"));
+	}
 };
