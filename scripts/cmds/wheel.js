@@ -1,163 +1,289 @@
-const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
-
-const GIF_URLS = {
-  loss: "https://i.imgur.com/1jkKESg.gif",
-  "2x": "https://i.imgur.com/wGVdDKi.gif",
-  "3x": "https://i.imgur.com/1EWNoe9.gif",
-  "5x": "https://i.imgur.com/8thK7IV.gif",
-  "7x": "https://i.imgur.com/bI428mz.gif"
-};
-
+const limit_hours = 12;
+const plays = 40;
+const bet = 10_000_000;
+const min_bet = 1000;
+const segments = [
+  { label: "JACKPOT", multiplier: 25, probability: 0.015, type: "jackpot", emoji: "🏆", color: "🟨" },
+  { label: "DIAMOND", multiplier: 10, probability: 0.025, type: "premium", emoji: "💎", color: "🟦" },
+  { label: "MEGA WIN", multiplier: 7, probability: 0.04, type: "big", emoji: "🔥", color: "🟧" },
+  { label: "GOLD", multiplier: 5, probability: 0.06, type: "medium", emoji: "⭐", color: "🟨" },
+  { label: "SILVER", multiplier: 3, probability: 0.10, type: "small", emoji: "💰", color: "⬜" },
+  { label: "BRONZE", multiplier: 2, probability: 0.15, type: "tiny", emoji: "🔔", color: "🟫" },
+  { label: "LUCKY", multiplier: 1.5, probability: 0.20, type: "mini", emoji: "🍀", color: "🟩" },
+  { label: "BREAK EVEN", multiplier: 1, probability: 0.15, type: "even", emoji: "➖", color: "⬛" },
+  { label: "HALF LOSS", multiplier: 0.5, probability: 0.10, type: "loss", emoji: "😢", color: "🟥" },
+  { label: "TOTAL LOSS", multiplier: 0, probability: 0.08, type: "loss", emoji: "💸", color: "🟥" },
+  { label: "BANKRUPT", multiplier: 0, probability: 0.03, type: "bankrupt", emoji: "⚡", color: "🟪", fee: 0.15 }
+];
+const SPECIAL_EVENTS = [
+  { name: "DOUBLE TROUBLE", trigger: 0.025, effect: (m) => m * 2 },
+  { name: "TRIPLE THREAT", trigger: 0.008, effect: (m) => m * 3 },
+  { name: "LUCKY CLOVER", trigger: 0.035, effect: (m) => m + 0.5 },
+  { name: "GOLDEN SPIN", trigger: 0.015, effect: (m) => m * 1.5 }
+];
 module.exports = {
   config: {
     name: "wheel",
-    version: "4.0",
-    author: "xalman",
-    role: 0,
-    countDown: 5,
-    category: "GAMES",
+    version: "6.0",
+    author: "NC-XNIL | NC-FAHAD",
+    shortDescription: "🎡 Wheel of Fortune",
+    longDescription: "Spin the wheel with progressive jackpots, special multiplier events, and exciting rewards!",
+    category: "game",
     guide: {
-      en: "{pn} <amount>"
+      en: "{p}wheel <bet> | {p}wheel info | {p}wheel stats | {p}wheel leaderboard | {p}wheel jackpot"
     }
   },
-
-  onStart: async ({ message, event, args, usersData, api }) => {
-    const { senderID, threadID } = event;
-    const cacheDir = path.join(__dirname, "cache");
-    if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir, { recursive: true });
-
-    const formatMoney = (num) => {
-      const n = Number(num);
-      if (n === Infinity || isNaN(n)) return "∞";
-      if (n < 1000) return n.toFixed(0);
-      const units = [
-        { v: 1e12, s: "T" },
-        { v: 1e9, s: "B" },
-        { v: 1e6, s: "M" },
-        { v: 1e3, s: "K" }
-      ];
-      for (let u of units) {
-        if (n >= u.v)
-          return (n / u.v).toFixed(2).replace(/\.00$/, "") + u.s;
-      }
-      return n.toLocaleString();
+  onStart: async function ({ api, event, args, usersData, commandName }) {
+    const { senderID, threadID, messageID } = event;
+    const subCommand = args[0]?.toLowerCase();
+    const user = await usersData.get(senderID);
+    if (!user) return;
+    const userStats = user.data?.wheelStats || {
+      totalSpins: 0,
+      totalWon: 0,
+      totalWagered: 0,
+      biggestWin: 0,
+      currentStreak: 0,
+      highestStreak: 0,
+      jackpotsWon: 0,
+      lastSpins: []
     };
+    if (subCommand === "info") {
+      const infoMsg = `
+🎡 ━━━━━━━━━━━━━━━━━━━━━ 🎡
+      WHEEL OF FORTUNE
+🎡 ━━━━━━━━━━━━━━━━━━━━━ 🎡
 
-    function parseAmount(input) {
-      if (!input) return NaN;
-      let a = input.toLowerCase();
-      if (a.endsWith("k")) return parseFloat(a) * 1e3;
-      if (a.endsWith("m")) return parseFloat(a) * 1e6;
-      if (a.endsWith("b")) return parseFloat(a) * 1e9;
-      if (a.endsWith("t")) return parseFloat(a) * 1e12;
-      return parseInt(a);
+💰 Bet Range: ${bet.toLocaleString()} -${bet.toLocaleString()}
+🎯 Max Limit: ${plays} spins every${limit_hours} hours
+
+━━━━━━ WHEEL SEGMENTS ━━━━━━
+${segments.map(s => `• ${s.emoji} ${s.label.padEnd(12)} x${s.multiplier} (${(s.probability * 100).toFixed(1)}%)`).join("\n")}
+
+━━━━━━ COMMANDS ━━━━━━
+• ${commandName} <amount>   - Spin the wheel
+• ${commandName} info       - Show command details
+• ${commandName} stats      - Your personal statistics
+• ${commandName} leaderboard - Top fortune spinners
+• ${commandName} jackpot    - Progressive jackpot status
+`.trim();
+      return api.sendMessage(infoMsg, threadID, messageID);
     }
+    if (subCommand === "stats") {
+      const winRate = userStats.totalSpins > 0 
+        ? ((userStats.totalWon / (userStats.totalWagered || 1)) * 100).toFixed(2)
+        : "0.00";
 
-    const betAmount = parseAmount(args[0]);
-    const minBet = 100;
-    const maxBet = 1e12;
+      const statsMsg = `
+📊 ━━━━━━ YOUR WHEEL STATS ━━━━━━ 📊
 
-    if (isNaN(betAmount) || betAmount < minBet) {
-      return message.reply(`🎰 Minimum bet is 100$\nExample: /wheel 1k`);
+🎡 Total Spins: ${userStats.totalSpins.toLocaleString()}
+💰 Total Won: ${userStats.totalWon.toLocaleString()}
+🎯 Total Wagered: ${(userStats.totalWagered || 0).toLocaleString()}
+📈 Return Rate: ${winRate}%
+🏆 Biggest Win: ${userStats.biggestWin.toLocaleString()}
+🔥 Current Streak: ${userStats.currentStreak}
+⚡ Highest Streak: ${userStats.highestStreak}
+🎰 Jackpots Won: ${userStats.jackpotsWon || 0}
+`.trim();
+      return api.sendMessage(statsMsg, threadID, messageID);
     }
-
-    if (betAmount > maxBet) {
-      return message.reply(`🚫 Max bet: ${formatMoney(maxBet)}$`);
-    }
-
-    let userData = await usersData.get(senderID);
-    if (!userData) {
-      userData = { money: 0 };
-    }
-    const currentMoney = Number(userData.money || 0);
-
-    if (betAmount > currentMoney) {
-      return message.reply(`💸 Not enough balance!\nBalance: ${formatMoney(currentMoney)}$`);
-    }
-
-    if (!global.wheelLimit) global.wheelLimit = {};
-    const now = Date.now();
-    if (!global.wheelLimit[senderID] || (now - global.wheelLimit[senderID].lastReset > 3600000)) {
-      global.wheelLimit[senderID] = { count: 0, lastReset: now };
-    }
-
-    const maxSpins = 50;
-    if (global.wheelLimit[senderID].count >= maxSpins) {
-      return message.reply(`🚫 Daily limit reached (${maxSpins} spins)`);
-    }
-
-    const spinChance = Math.floor(Math.random() * 100);
-    let winType = "loss";
-    let multiplier = 0;
-
-    if (spinChance < 70) {
-      const winTypeRoll = Math.floor(Math.random() * 100);
-      if (winTypeRoll < 50) { winType = "2x"; multiplier = 2; }
-      else if (winTypeRoll < 80) { winType = "3x"; multiplier = 3; }
-      else if (winTypeRoll < 95) { winType = "5x"; multiplier = 5; }
-      else { winType = "7x"; multiplier = 7; }
-    }
-
-    const win = winType !== "loss";
-    const bonus = win ? betAmount * multiplier : 0;
-    const finalMoney = win ? currentMoney + bonus : currentMoney - betAmount;
-
-    userData.money = finalMoney;
-    await usersData.set(senderID, userData);
-    global.wheelLimit[senderID].count++;
-
-    const statusText = win ? `WIN (${multiplier}X) ✨` : "NO MATCH FOUND 💔";
-    const payoutText = win ? "Won: +" + formatMoney(bonus) + "$" : "Lost: -" + formatMoney(betAmount) + "$";
-    const outcomeEmoji = win ? "🎉" : "💀";
-
-    const msgBody = `🎡 𝗪𝗛𝗘𝗘𝗟 𝗦𝗣𝗜𝗡
-
-${outcomeEmoji} Result: ${statusText}
-💰 ${payoutText}
-💳 Balance: ${formatMoney(finalMoney)}$
-📊 Spun Today: ${global.wheelLimit[senderID].count}/${maxSpins}`;
-
-    const filePath = path.join(cacheDir, `wheel_${Date.now()}.gif`);
-    api.setMessageReaction("🌀", event.messageID, () => {}, true);
-
-    try {
-      const imageResponse = await axios({
-        url: GIF_URLS[winType],
-        method: "GET",
-        responseType: "stream",
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
+    if (subCommand === "leaderboard" || subCommand === "top") {
+      const allUsers = await usersData.getAll();
+      const leaderboardData = allUsers
+        .filter(u => u.data?.wheelStats?.totalSpins > 0)
+        .map(u => {
+          const stats = u.data.wheelStats;
+          const netProfit = (stats.totalWon || 0) - (stats.totalWagered || 0);
+          return {
+            name: u.name || "Anonymous",
+            netProfit,
+            totalWon: stats.totalWon || 0,
+            spins: stats.totalSpins || 0,
+            jackpots: stats.jackpotsWon || 0
+          };
+        })
+        .sort((a, b) => b.netProfit - a.netProfit)
+        .slice(0, 10);
+      if (leaderboardData.length === 0) {
+        return api.sendMessage("🎡 No players have spun the wheel yet! Be the first!", threadID, messageID);
+      }
+      let lbMsg = "🏆 ━━━━━━ WHEEL LEADERBOARD ━━━━━━ 🏆\n\n";
+      const medals = ["🥇", "🥈", "🥉"];
+      leaderboardData.forEach((u, i) => {
+        const medal = medals[i] || `▫️ ${i + 1}.`;
+        const profitSign = u.netProfit >= 0 ? "+" : "";
+        lbMsg += `${medal}${u.name}\n`;
+        lbMsg += `   💵 Net Profit: ${profitSign}${u.netProfit.toLocaleString()}\n`;
+        lbMsg += `   🎡 Spins: ${u.spins} \vert{} 🎰 Jackpots: ${u.jackpots}\n\n`;
       });
-
-      const writer = fs.createWriteStream(filePath);
-      imageResponse.data.pipe(writer);
-
-      await new Promise((resolve, reject) => {
-        writer.on("finish", resolve);
-        writer.on("error", reject);
+      return api.sendMessage(lbMsg.trim(), threadID, messageID);
+    }
+    if (subCommand === "jackpot") {
+      const allUsers = await usersData.getAll();
+      let totalJackpot = 0;
+      allUsers.forEach(u => {
+        totalJackpot += u.data?.progressiveJackpot || 0;
       });
+      const jackpotMsg = `
+🎰 ━━━━━━ PROGRESSIVE JACKPOT ━━━━━━ 🎰
 
+🏆 Current Pool: ${totalJackpot.toLocaleString()} coins
+💰 Contribution: 2% of every spin bet
+
+━━━━━━ HOW TO WIN ━━━━━━
+• Land on 🏆 JACKPOT segment
+• Win 50% - 150% of the entire global jackpot pool!
+`.trim();
+      return api.sendMessage(jackpotMsg, threadID, messageID);
+    }
+    if (!args[0]) {
       return api.sendMessage(
-        {
-          body: msgBody,
-          attachment: fs.createReadStream(filePath)
-        },
-        threadID,
-        () => {
-          api.setMessageReaction("✅", event.messageID, () => {}, true);
-          if (fs.existsSync(filePath)) {
-            try { fs.unlinkSync(filePath); } catch {}
-          }
-        },
-        event.messageID
+        `🎡 WHEEL OF FORTUNE\n\n` +
+        `Usage: ${commandName} <bet amount>\n` +
+        `Min Bet: ${min_bet.toLocaleString()} \vert{} Max Bet:${bet.toLocaleString()}\n\n` +
+        `Subcommands:\n` +
+        `• ${commandName} info\n` +
+        `• ${commandName} stats\n` +
+        `• ${commandName} leaderboard\n` +
+        `• ${commandName} jackpot`,
+        threadID, messageID
       );
+    }
+    const bet = parseInt(args[0].replace(/\D/g, ''));
+    if (isNaN(bet) || bet <= 0) {
+      return api.sendMessage("❌ Please enter a valid numeric bet amount.", threadID, messageID);
+    }
+    if (bet < bet) {
+      return api.sendMessage(`❌ Minimum bet amount is ${bet.toLocaleString()} coins.`, threadID, messageID);
+    }
+    if (bet > bet) {
+      return api.sendMessage(`❌ Maximum bet amount is ${bet.toLocaleString()} coins.`, threadID, messageID);
+    }
+    if (user.money < bet) {
+      return api.sendMessage(
+        `💸 Insufficient funds!\n` +
+        `Current Balance: ${user.money.toLocaleString()} coins\n` +
+        `Required: ${bet.toLocaleString()} coins`,
+        threadID, messageID
+      );
+    }
+    const now = Date.now();
+    const validSpins = (userStats.lastSpins || []).filter(time => 
+      typeof time === "number" && (now - time) < (limit_hours * 3600 * 1000)
+    );
+    if (validSpins.length >= plays) {
+      const oldestSpin = validSpins[0];
+      const nextAvailable = new Date(oldestSpin + (limit_hours * 3600 * 1000));
+      return api.sendMessage(
+        `⏰ Spin limit reached (${plays}/${plays})!\n` +
+        `Next available spin: ${nextAvailable.toLocaleTimeString()}`,
+        threadID, messageID
+      );
+    }
+    await usersData.set(senderID, {
+      money: user.money - bet,
+      "data.wheelStats.totalWagered": (userStats.totalWagered || 0) + bet
+    });
+    const jackpotContrib = Math.floor(bet * 0.02);
+    const currentJackpot = (user.data?.progressiveJackpot || 0) + jackpotContrib;
+    validSpins.push(now);
+    await usersData.set(senderID, {
+      "data.progressiveJackpot": currentJackpot,
+      "data.wheelStats.lastSpins": validSpins
+    });
+    let spinMsg;
+    try {
+      spinMsg = await api.sendMessage("🎮 Spinning the wheel... 🎮", threadID);
+    } catch (err) {
+      console.error("Error sending spin message:", err);
+      return;
+    }
+    const animFrames = [
+      "3️⃣ 3️⃣ 3️⃣",
+      "2️⃣ 2️⃣ 2️⃣",
+      "1️⃣ 1️⃣ 1️⃣",
+      "0️⃣ 0️⃣ 0️⃣"
+    ];
+    for (const frame of animFrames) {
+      await new Promise(res => setTimeout(res, 400));
+      try {
+        await api.editMessage(frame, spinMsg.messageID);
+      } catch (e) {
+      }
+    }
+    const rand = Math.random();
+    let cumulative = 0;
+    let selectedSegment = segments[segments.length - 1];
+    for (const seg of segments) {
+      cumulative += seg.probability;
+      if (rand <= cumulative) {
+        selectedSegment = { ...seg };
+        break;
+      }
+    }
+    let activeEvent = null;
+    for (const ev of SPECIAL_EVENTS) {
+      if (Math.random() < ev.trigger) {
+        activeEvent = ev;
+        selectedSegment.multiplier = ev.effect(selectedSegment.multiplier);
+        break;
+      }
+    }
+    let baseWinnings = Math.floor(bet * selectedSegment.multiplier);
+    let jackpotWinnings = 0;
+    let streakBonus = 0;
+    if (selectedSegment.type === "jackpot") {
+      jackpotWinnings = Math.floor(currentJackpot * (0.5 + Math.random()));
+      await usersData.set(senderID, { "data.progressiveJackpot": 0 });
+    }
+    if (selectedSegment.type === "bankrupt") {
+      baseWinnings = -Math.floor(bet * (selectedSegment.fee || 0.15));
+    }
+    let newStreak = selectedSegment.multiplier > 1 ? userStats.currentStreak + 1 : 0;
+    if (newStreak >= 3) {
+      streakBonus = Math.floor(bet * (newStreak - 2) * 0.2);
+    }
+    const totalWinnings = Math.max(0, baseWinnings) + jackpotWinnings + streakBonus;
+    const finalBalance = (user.money - bet) + totalWinnings;
+    const updatedStats = {
+      totalSpins: (userStats.totalSpins || 0) + 1,
+      totalWon: (userStats.totalWon || 0) + totalWinnings,
+      totalWagered: (userStats.totalWagered || 0) + bet,
+      biggestWin: Math.max(userStats.biggestWin || 0, totalWinnings),
+      currentStreak: newStreak,
+      highestStreak: Math.max(userStats.highestStreak || 0, newStreak),
+      jackpotsWon: selectedSegment.type === "jackpot" ? (userStats.jackpotsWon || 0) + 1 : (userStats.jackpotsWon || 0),
+      lastSpins: validSpins
+    };
+    await usersData.set(senderID, {
+      money: finalBalance,
+      "data.wheelStats": updatedStats
+    });
+    const resultCard = [
+      `🎡 ━━━━━━ WHEEL RESULT ━━━━━━ 🎡`,
+      ``,
+      `🎯 Landed On: ${selectedSegment.emoji} ${selectedSegment.label}`,
+      `💰 Bet Amount: ${bet.toLocaleString()}`,
+      `📈 Multiplier: ${selectedSegment.multiplier.toFixed(2)}x`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━`
+    ];
+    if (baseWinnings > 0) resultCard.push(`🎉 Base Win: +${baseWinnings.toLocaleString()}`);
+    if (jackpotWinnings > 0) resultCard.push(`🏆 JACKPOT BONUS: +${jackpotWinnings.toLocaleString()}!`);
+    if (activeEvent) resultCard.push(`✨ Special Event: ${activeEvent.name}!`);
+    if (streakBonus > 0) resultCard.push(`🔥 Streak Bonus (${newStreak}x): +${streakBonus.toLocaleString()}`);
+    if (selectedSegment.type === "bankrupt") resultCard.push(`⚡ Bankrupt Penalty: -${Math.abs(baseWinnings).toLocaleString()}`);
+    resultCard.push(
+      `━━━━━━━━━━━━━━━━━━━━━━━━`,
+      `💵 Net Outcome: ${totalWinnings >= bet ? '+' : ''}${(totalWinnings - bet).toLocaleString()}`,
+      `💰 Balance: ${finalBalance.toLocaleString()}`,
+      `🎡 Spins Remaining: ${plays - validSpins.length}/${plays}`
+    );
+    if (newStreak > 1) resultCard.push(`🔥 Win Streak: ${newStreak}`);
+    try {
+      await api.editMessage(resultCard.join("\n"), spinMsg.messageID);
     } catch (e) {
-      console.error(e);
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      return message.reply("⚠️ Network error, please try again.");
+      await api.sendMessage(resultCard.join("\n"), threadID);
     }
   }
 };
