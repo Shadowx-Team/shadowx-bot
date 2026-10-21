@@ -13,7 +13,7 @@ module.exports = {
     role: 0,
     shortDescription: { en: "Convert someone into a cow" },
     longDescription: { en: "Put user's profile picture on a cow image using canvas" },
-    category: "FUN & SOCIAL",
+    category: "fun",
     guide: { en: "{pn} @mention / reply / UID" }
   },
 
