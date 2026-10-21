@@ -14,7 +14,7 @@ module.exports = {
     role: 0,
     shortDescription: "Generate a kick image with circular avatars",
     longDescription: "Generate an image showing the sender kicking the mentioned/replied user based on a template.",
-    category: "FUN & SOCIAL",
+    category: "fun",
     guide: "{pn} @tag or reply to a message"
   },
 
