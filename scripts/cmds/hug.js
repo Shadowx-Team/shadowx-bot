@@ -12,7 +12,7 @@ module.exports = {
         role: 0,
         shortDescription: "Send a warm hug!",
         longDescription: "Hug someone using mention, reply, or UID. Generates a custom image.",
-        category: "FUN & SOCIAL",
+        category: "love",
         guide: "{pn} @mention | [reply] {pn} | {pn} uid"
     },
 
