@@ -15,7 +15,7 @@ module.exports = {
     role: 0,
     shortDescription: { en: "Turn someone into a chicken" },
     longDescription: { en: "Overlay user avatar on a chicken template" },
-    category: "FUN & SOCIAL",
+    category: "fun",
     guide: { en: "{pn} @mention / reply / UID" }
   },
 
