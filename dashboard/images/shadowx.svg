@@ -8,21 +8,13 @@
     </style>
     
     <linearGradient id="borderGrad" x1="0" y1="0" x2="1000" y2="300" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#58A6FF">
-        <animate attributeName="stop-color" values="#58A6FF;#BC8CFF;#3FB950;#58A6FF" dur="8s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="50%" stop-color="#BC8CFF">
-        <animate attributeName="stop-color" values="#BC8CFF;#3FB950;#58A6FF;#BC8CFF" dur="8s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#3FB950">
-        <animate attributeName="stop-color" values="#3FB950;#58A6FF;#BC8CFF;#3FB950" dur="8s" repeatCount="indefinite"/>
-      </stop>
+      <stop offset="0%" stop-color="#58A6FF"/>
+      <stop offset="50%" stop-color="#BC8CFF"/>
+      <stop offset="100%" stop-color="#3FB950"/>
     </linearGradient>
 
     <radialGradient id="bgGlow" cx="0%" cy="0%" r="80%">
-      <stop offset="0%" stop-color="#1F6FEB" stop-opacity="0.25">
-        <animate attributeName="stop-opacity" values="0.25;0.05;0.25" dur="4s" repeatCount="indefinite"/>
-      </stop>
+      <stop offset="0%" stop-color="#1F6FEB" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="#0D1117" stop-opacity="0"/>
     </radialGradient>
 
@@ -35,59 +27,63 @@
     </filter>
   </defs>
 
-  <!-- Background -->
   <rect width="1000" height="300" rx="16" fill="#0D1117"/>
   <rect width="1000" height="300" rx="16" fill="url(#bgGlow)"/>
   <rect width="1000" height="300" rx="16" fill="none" stroke="url(#borderGrad)" stroke-width="2"/>
 
-  <!-- Online Status Indicator -->
+  <!-- Online Badge -->
   <g transform="translate(850, 40)">
     <rect width="90" height="28" rx="14" fill="#161B22" stroke="#30363D"/>
     <circle cx="18" cy="14" r="4" fill="#3FB950" filter="url(#glowFilter)">
-      <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
     </circle>
     <text x="30" y="18" class="code" font-size="10" fill="#3FB950">ONLINE</text>
   </g>
 
-  <!-- Title & Subtitle -->
+  <!-- Name -->
   <text x="60" y="85" class="title" font-size="34" fill="#58A6FF" filter="url(#glowFilter)">
     Mueid Mursalin Rifat
-    <animate attributeName="fill" values="#58A6FF;#BC8CFF;#3FB950;#58A6FF" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1" dur="0.8s" fill="freeze"/>
   </text>
-  <text x="60" y="120" class="sub" font-size="16" fill="#8B949E">Creator of ShadowX-Bot • API Architect • Bangladesh 🇧🇩</text>
+  
+  <!-- Subtitle -->
+  <text x="60" y="120" class="sub" font-size="16" fill="#8B949E" opacity="0">
+    Creator of ShadowX-Bot • API Architect • Bangladesh 🇧🇩
+    <animate attributeName="opacity" values="0;1" begin="0.4s" dur="0.8s" fill="freeze"/>
+  </text>
 
-  <!-- Card 1: Main Project -->
-  <g transform="translate(60, 160)">
+  <!-- Card 1 -->
+  <g transform="translate(60, 160)" opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="0.6s" dur="0.8s" fill="freeze"/>
     <rect width="270" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
     <text x="20" y="32" class="code" font-size="11" fill="#8B949E">MAIN PROJECT</text>
-    <text x="20" y="62" class="title" font-size="18" fill="#3FB950" filter="url(#glowFilter)">ShadowX-Bot</text>
+    <text x="20" y="62" class="title" font-size="18" fill="#3FB950">ShadowX-Bot</text>
   </g>
 
-  <!-- Card 2: Speciality -->
-  <g transform="translate(350, 160)">
+  <!-- Card 2 -->
+  <g transform="translate(350, 160)" opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="0.8s" dur="0.8s" fill="freeze"/>
     <rect width="270" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
     <text x="20" y="32" class="code" font-size="11" fill="#8B949E">SPECIALITY</text>
     <text x="20" y="62" class="title" font-size="18" fill="#D29922">APIs &amp; Automation</text>
   </g>
 
-  <!-- Card 3: Stack Badges -->
-  <g transform="translate(640, 160)">
+  <!-- Card 3 -->
+  <g transform="translate(640, 160)" opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="1s" dur="0.8s" fill="freeze"/>
     <rect width="300" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
     <text x="20" y="32" class="code" font-size="11" fill="#8B949E">PRIMARY STACK</text>
     
-    <!-- Node.js Badge -->
     <g transform="translate(20, 44)">
       <rect width="72" height="24" rx="6" fill="#238636" fill-opacity="0.2" stroke="#238636"/>
       <text x="36" y="16" text-anchor="middle" class="code" font-size="11" fill="#3FB950">Node.js</text>
     </g>
     
-    <!-- Python Badge -->
     <g transform="translate(100, 44)">
       <rect width="68" height="24" rx="6" fill="#1F6FEB" fill-opacity="0.2" stroke="#1F6FEB"/>
       <text x="34" y="16" text-anchor="middle" class="code" font-size="11" fill="#58A6FF">Python</text>
     </g>
 
-    <!-- Railway Badge -->
     <g transform="translate(176, 44)">
       <rect width="72" height="24" rx="6" fill="#8E44AD" fill-opacity="0.2" stroke="#8E44AD"/>
       <text x="36" y="16" text-anchor="middle" class="code" font-size="11" fill="#BC8CFF">Railway</text>
