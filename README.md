@@ -7,6 +7,10 @@ SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
 🛠️  Modified by MUEID MURSALIN RIFAT
 🟢  status: online   ⚡ engine: shadowx-fca   🐘 database: MongoDB · Neon · SQLite · JSON
 ```
+<p align="center">
+  <img src="./dashboard/images/shadowx.svg" alt="Mueid Mursalin Rifat" width="100%"/>
+</p>
+---
 
 **A full-stack, event-driven Messenger engine built for scale, speed, and control.**
 
@@ -23,11 +27,6 @@ SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
 📦 [Repository](https://github.com/mueidmursalinrifat/shadowx-bot)
 
 </div>
----
-
-<p align="center">
-  <img src="./dashboard/images/shadowx.svg" alt="Mueid Mursalin Rifat" width="100%"/>
-</p>
 ---
 
 ## 📑 Contents
