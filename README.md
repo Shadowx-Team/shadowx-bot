@@ -23,7 +23,10 @@ SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
 📦 [Repository](https://github.com/mueidmursalinrifat/shadowx-bot)
 
 </div>
-
+---
+<p align="center">
+  <img src="./shadowx.svg" alt="Mueid Mursalin shadowx" width="100%"/>
+</p>
 ---
 
 ## 📑 Contents
