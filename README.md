@@ -125,7 +125,7 @@ root@shadowx:~$ ./shadowx-bot --commands
 
 ### 🧠 Other systems
 
-Premium gating, approval mode, whitelist mode, admin-only mode, typing indicator, reaction mirror, event logging, and failure alerts through Gmail, Telegram, or Discord.
+Premium gating, whitelist mode, admin-only mode, typing indicator, reaction mirror, event logging, and failure alerts through Gmail, Telegram, or Discord.
 
 ---
 
