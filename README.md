@@ -3,9 +3,9 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D001A,50:7000FF,100:00D9FF&height=260&section=header&text=SHADOWX-BOT&fontSize=74&fontColor=FFFFFF&animation=fadeIn&fontAlignY=40&desc=Not%20Coded%20to%20Impress%20Coded%20to%20Express&descSize=20&descAlignY=62&descColor=FFD700" width="100%"/>
 
 ```console
-SHADOWX-BOT v2.0 ── Facebook Messenger Automation Engine
+SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
 🛠️  Modified by MUEID MURSALIN RIFAT
-🟢  status: online   ⚡ engine: shadowx-fca   🐘 database: Neon · MongoDB · SQLite
+🟢  status: online   ⚡ engine: shadowx-fca   🐘 database: MongoDB · Neon · SQLite · JSON
 ```
 
 **A full-stack, event-driven Messenger engine built for scale, speed, and control.**
@@ -14,13 +14,13 @@ SHADOWX-BOT v2.0 ── Facebook Messenger Automation Engine
 
 <br>
 
-<a href="https://github.com/mueidmursalinrifat/shadowx-bot"><img src="https://img.shields.io/github/stars/mueidmursalinrifat/shadowx-bot?style=for-the-badge&logo=github&label=STARS&color=7000FF" alt="Stars"></a>
-<a href="https://github.com/mueidmursalinrifat/shadowx-bot"><img src="https://img.shields.io/github/last-commit/mueidmursalinrifat/shadowx-bot?style=for-the-badge&logo=github&label=LAST%20UPDATE&color=FFD700" alt="Last Commit"></a>
+<a href="https://github.com/mueidmursalinrifat/shadowx-bot.git"><img src="https://img.shields.io/github/stars/yeasin121212/shadowx-bot?style=for-the-badge&logo=github&label=STARS&color=7000FF" alt="Stars"></a>
+<a href="https://github.com/mueidmursalinrifat/shadowx-bot.git"><img src="https://img.shields.io/github/last-commit/mueidmursalinrifat/shadowx-bot?style=for-the-badge&logo=github&label=LAST%20UPDATE&color=FFD700" alt="Last Commit"></a>
 <a href="https://github.com/mueidmursalinrifat/shadowx-bot/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-7000FF?style=for-the-badge" alt="License"></a>
 <img src="https://img.shields.io/badge/NODE-22.x-00D9FF?style=for-the-badge&logo=node.js&logoColor=white" alt="Node 22">
 <img src="https://img.shields.io/badge/ENGINE-shadowx--fca-7000FF?style=for-the-badge" alt="shadowx-fca">
 
-🌐 [Portfolio](https://mueidmursalinrifat.onrender.com) • 📘 [Facebook](https://www.facebook.com/mueid.mursalin.rifat1) • 📦 [Repository](https://github.com/mueidmursalinrifat/shadowx-bot)
+📦 [Repository](https://github.com/mueidmursalinrifat/shadowx-bot)
 
 </div>
 
@@ -36,6 +36,7 @@ root@shadowx:~$ ./shadowx-bot --help
 - 🧭 [About](#-about)
 - ⭐ [Highlights](#-highlights)
 - 🚀 [Features](#-features)
+- 🔐 [Approval system](#-approval-system)
 - 🏗️ [Architecture](#-architecture)
 - 🔐 [Roles](#-roles)
 - ⚙️ [Configuration](#-configuration)
@@ -44,6 +45,8 @@ root@shadowx:~$ ./shadowx-bot --help
 - 🔧 [Native fix](#-native-fix)
 - 📋 [Requirements](#-requirements)
 - 🤖 [Auto systems](#-auto-systems)
+- 🖼️ [Profile avatars](#-profile-avatars)
+- 🆕 [Recent updates](#-recent-updates)
 - 🛠️ [Troubleshooting](#-troubleshooting)
 - 🤝 [Contributing](#-contributing)
 - 🌟 [Connect](#-connect)
@@ -68,10 +71,10 @@ Three ideas guide the build.
 | Goal | Meaning |
 |---|---|
 | 🛡️ Reliability | Auto reconnect, MQTT supervision, session backup, and optional uptime pings keep the process alive. |
-| 🎛️ Control | Five permission tiers, whitelist mode, admin-only mode, per-thread settings, and a web dashboard. |
+| 🎛️ Control | Permission tiers, approval mode, whitelist mode, admin-only mode, per-thread settings, and a web dashboard. |
 | 🧩 Extensibility | Modular commands and events, live script loading, and a clean data layer. |
 
-The result is a large command library with economy, social, gaming, media, AI, group management, and premium features.
+The result is a compact command library with economy, games, fun, social, group management, owner tools, and utilities.
 
 ---
 
@@ -80,10 +83,10 @@ The result is a large command library with economy, social, gaming, media, AI, g
 ```console
 root@shadowx:~$ ./shadowx-bot --highlights
 [1/8] 🎨 identity and banner rebuilt
-[2/8] 🐘 neon postgres attached
+[2/8] 🐘 mongodb database attached
 [3/8] ⚡ shadowx-fca session online
 [4/8] 🚀 command library verified
-[5/8] 💎 premium gate armed
+[5/8] 🔐 approval mode available
 [6/8] 🖥️ dashboard reachable
 [7/8] 🔧 native modules healthy
 [8/8] 🟢 node 22 runtime locked
@@ -91,13 +94,15 @@ root@shadowx:~$ ./shadowx-bot --highlights
 ```
 
 - 🎨 Rebuilt identity, banner, and documentation
-- 🐘 Neon PostgreSQL by default, with SQLite, JSON, and MongoDB available
+- 🐘 MongoDB by default, with Neon PostgreSQL, SQLite, and JSON available
 - ⚡ `shadowx-fca` login with E2EE bootstrap and appstate backup
-- 🚀 **226 commands** across nine categories — explore them all with `.help` in chat 💬
+- 🚀 **35 commands** across eight categories — explore them with `#help` in chat
+- 🔐 Approval mode with permanent and temporary group approvals
 - 💎 Premium membership with expiry tracking
 - 🖥️ Dashboard with verification codes and account controls
 - 🔧 Self-healing native modules for `canvas`, `sqlite3`, and `bcrypt`
 - 🟢 Node 22 runtime with a repeatable build flow
+- 🖼️ Reliable profile avatars with session and token fallbacks
 
 ---
 
@@ -106,23 +111,15 @@ root@shadowx:~$ ./shadowx-bot --highlights
 ```console
 root@shadowx:~$ ./shadowx-bot --commands
 [ OK ] scanning command registry...
-[ OK ] 9 categories loaded
-[ OK ] 226 commands mounted
+[ OK ] 8 categories loaded
+[ OK ] 35 commands mounted
 [ OK ] permissions attached
-[ READY ] use .help in chat to explore
+[ READY ] use #help in chat to explore
 ```
-
-The command library spans AI and image generation, anime and media, economy, games, fun and social, group administration, owner and system tools, utilities, and Islamic features — all gated by the permission tiers below. Explore them in chat with `.help`.
 
 ### 🧠 Other systems
 
-Premium gating, whitelist mode, admin-only mode, typing indicator, reaction mirror, event logging, and failure alerts through Gmail, Telegram, or Discord.
-
-```console
-root@shadowx:~$ ./shadowx-bot --systems-list
-[ OK ] loading system features...
-[ OK ] premium, whitelist, admin-only, typing, reaction ready
-```
+Premium gating, approval mode, whitelist mode, admin-only mode, typing indicator, reaction mirror, event logging, and failure alerts through Gmail, Telegram, or Discord.
 
 ---
 
@@ -140,36 +137,20 @@ graph TD
     C --> E["Event Handlers"]
     D --> F["Permission Guard"]
     F --> G["Command Modules"]
-    G --> H["Neon PostgreSQL"]
+    G --> H["MongoDB"]
     G --> I["Media and AI APIs"]
     E --> H
     E --> J["Welcome Leave Logs"]
     E --> K["Economy and Premium"]
 ```
 
-```console
-root@shadowx:~$ ./shadowx-bot --describe-arch
-[ OK ] component   : Messenger User
-[ OK ] component   : shadowx-fca Listener
-[ OK ] component   : Event Router
-[ OK ] component   : Command Engine
-[ OK ] component   : Event Handlers
-[ OK ] component   : Permission Guard
-[ OK ] component   : Command Modules
-[ OK ] component   : Neon PostgreSQL
-[ OK ] component   : Media and AI APIs
-[ OK ] component   : Welcome Leave Logs
-[ OK ] component   : Economy and Premium
-[ OK ] architecture built
-```
-
-A message arrives through the MQTT listener. The router resolves the prefix, thread settings, and sender role. Commands pass cooldown and permission checks. Data is read or written. Media commands call external APIs. Greeting, warning, and expiry events run in parallel.
+A message arrives through the MQTT listener. The router resolves the prefix, thread settings, and sender role. Commands pass cooldown, approval, and permission checks. Data is read or written. Media commands call external APIs. Greeting, warning, and expiry events run in parallel.
 
 ```console
 root@shadowx:~$ ./shadowx-bot --trace
 [1/6] 📡 event received from mqtt listener
 [2/6] 🧭 prefix, thread, and role resolved
-[3/6] 🔐 cooldown and permission checks passed
+[3/6] 🔐 cooldown, approval, and permission checks passed
 [4/6] 🗄️ database read and write
 [5/6] 🎨 external api call and attachment
 [6/6] ⚙️ parallel event handlers fired
@@ -189,8 +170,6 @@ root@shadowx:~$ ./shadowx-bot --roles
 [ 0 ] 👤 member       <- default
 ```
 
-Tiers are checked in strict priority order.
-
 | Tier | Level | Source |
 |---|:---:|---|
 | 👑 Developer | **4** | `devUsers` |
@@ -199,7 +178,7 @@ Tiers are checked in strict priority order.
 | 🧑‍💼 Group Admin | **1** | Thread admin list |
 | 👤 Member | **0** | Default |
 
-Each command declares the minimum tier it needs. Premium and developer checks finish before group and member checks.
+Commands declare the minimum tier they need. Higher tiers inherit lower-tier access.
 
 ---
 
@@ -209,31 +188,34 @@ Each command declares the minimum tier it needs. Premium and developer checks fi
 root@shadowx:~$ cat config.json | ./shadowx-bot --keys
 [ OK ] prefix, usePrefix
 [ OK ] adminBot, devUsers, premiumUsers
-[ OK ] database.type, database.uriNeon
+[ OK ] approval, adminOnly, whiteListMode
+[ OK ] database.type, database.uriMongodb
 [ OK ] dashBoard, serverUptime
 [ OK ] autoRestart, autoUptime, autoLoadScripts
-[ OK ] whiteListMode, logEvents, optionsFca
+[ OK ] logEvents, optionsFca
 ```
 
 Everything lives in `config.json`. These keys matter most.
 
 | Key | Purpose |
 |---|---|
-| `prefix` | Default command prefix, `.` |
-| `usePrefix` | No-prefix mode, global or admin-only |
+| `prefix` | Default command prefix, `.` in the current config |
+| `usePrefix` | Prefix mode, including admin prefix rules |
 | `adminBot`, `devUsers`, `premiumUsers` | Account IDs per tier |
-| `database.type` | `neon`, `sqlite`, `json`, or `mongodb` |
+| `approval` | Enable approved-groups-only command access |
+| `adminOnly` | Limit command use to bot admins |
+| `whiteListMode` | Limit usage to approved IDs |
+| `database.type` | `mongodb`, `neon`, `sqlite`, or `json` |
+| `database.uriMongodb` | MongoDB connection string |
 | `database.uriNeon` | Neon connection string |
-| `dashBoard` | Port, admin key, code expiry |
-| `serverUptime` | External uptime reporting |
+| `dashBoard` | Enable, port (`5000`), admin key, code expiry |
+| `serverUptime` | External uptime reporting and socket |
 | `autoRestart` | Interval or cron expression |
 | `autoUptime` | Self-ping to stay awake |
 | `autoLoadScripts` | Reload changed files |
 | `autoRefreshFbstate` | Refresh the session |
-| `autoReloginWhenChangeAccount` | Re-login on account switch |
 | `restartListenMqtt` | Listener restart interval |
 | `notiWhenListenMqttError` | Failure alert channels |
-| `whiteListMode` | Limit usage to approved IDs |
 | `hideNotiMessage` | Silence chosen warnings |
 | `logEvents` | Per-type event logging |
 | `optionsFca` | Engine flags such as force login and presence |
@@ -262,7 +244,7 @@ node index.js
 npm start
 ```
 
-The web service listens on `process.env.PORT` or port `3000`.
+The web service listens on `process.env.PORT` or port `3000`. The dashboard uses `dashBoard.port`, which is `5000` in the current config.
 
 ---
 
@@ -327,10 +309,13 @@ Reconnect handles network drops. MQTT supervision restarts the listener on a tim
 | Canvas version mismatch | `npm run fix:canvas` |
 | Bot exits at once | Check console output and validate `config.json` |
 | Login loop | Refresh the session, confirm the account is not blocked |
-| Database offline | Check `database.type` and `database.uriNeon` |
+| Database offline | Check `database.type` and the matching URI |
 | Command missing | Confirm the file loaded and the prefix matches |
 | Native build fails | Install build tools, then rebuild |
-| Port in use | Change `PORT` or the dashboard port |
+| Port in use | Change `PORT` or `dashBoard.port` |
+| Profile picture blank | Check the token has the trailing `2`, then restart the bot |
+| Approval blocks a group | Approve it with `#approve on` as a bot admin |
+| Push rejected by GitHub | `git pull --rebase origin main` then `git push -u origin main` |
 
 ```console
 tail -n 100 logs/bot.log
@@ -338,20 +323,29 @@ tail -n 100 logs/bot.log
 
 ---
 
+## 🤝 Contributing
+
+```console
+git checkout -b feature/my-change
+git add .
+git commit -m "feat: describe the change"
+git push -u origin feature/my-change
+```
+
+Open a pull request with a clear title, the reason for the change, and test notes.
+
+---
+
 ## 🌟 Connect
 
 ```console
 root@shadowx:~$ ./shadowx-bot --connect
-[ OK ] connecting to portfolio...
-[ OK ] connecting to facebook...
 [ OK ] connecting to repository...
 [ OK ] all connections established
 ```
 
 ```
-🌐 Portfolio: https://mueidmursalinrifat.onrender.com
-📘 Facebook: https://www.facebook.com/mueid.mursalin.rifat1
-📦 GitHub: https://github.com/mueidmursalinrifat/shadowx-bot
+📦 GitHub: https://github.com/mueidmursalinrifat/shadowx-bot.git
 ```
 
 Star, fork, report bugs, suggest features, or send improvements.
@@ -366,16 +360,18 @@ root@shadowx:~$ ./shadowx-bot --version
   ⚡ SHADOWX-BOT
   🛠️ modified by MUEID MURSALIN RIFAT
   🟢 runtime  Node.js 22.x
-  🐘 database Neon PostgreSQL
+  🐘 database MongoDB
   ⚡ engine   shadowx-fca
   📜 license  MIT
 ```
 
 | Field | Value |
 |----|:---:|---|
-| 🌐 Web portfolio | [mueidmursalinrifat.onrender.com](https://mueidmursalinrifat.onrender.com) |
-| 📘 Facebook | [mueid.mursalin.rifat1](https://www.facebook.com/mueid.mursalin.rifat1) |
-| 📦 GitHub | [shadowx-bot](https://github.com/mueidmursalinrifat/shadowx-bot) |
+| 📦 GitHub | [mueidmursalinrifat/shadowx-bot](https://github.com/mueidmursalinrifat/shadowx-bot) |
+| ⚡ Engine | shadowx-fca |
+| 🟢 Runtime | Node.js 22.x |
+| 🐘 Database | MongoDB, Neon, SQLite, JSON |
+| 📜 License | MIT |
 
 <div align="center">
 
@@ -383,8 +379,6 @@ root@shadowx:~$ ./shadowx-bot --version
 
 *Mueid Mursalin Rifat*
 
-<a href="https://mueidmursalinrifat.onrender.com"><img src="https://img.shields.io/badge/PORTFOLIO-00D9FF?style=for-the-badge&logo=render&logoColor=white" alt="Portfolio"></a>
-<a href="https://www.facebook.com/mueid.mursalin.rifat1"><img src="https://img.shields.io/badge/FACEBOOK-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
 <a href="https://github.com/mueidmursalinrifat/shadowx-bot"><img src="https://img.shields.io/badge/GITHUB-7000FF?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00D9FF,50:7000FF,100:0D001A&height=140&section=footer" width="100%">
