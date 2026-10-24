@@ -1,126 +1,64 @@
-<svg width="1000" height="360" viewBox="0 0 1000 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1000" height="300" viewBox="0 0 1000 300" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1000" y2="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#030712"/>
-      <stop offset="50%" stop-color="#0B0F19"/>
-      <stop offset="100%" stop-color="#11052C"/>
-    </linearGradient>
-    <linearGradient id="neon" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#00F5FF">
-        <animate attributeName="stop-color" values="#00F5FF;#7F00FF;#FF00E5;#00F5FF" dur="6s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="50%" stop-color="#7F00FF">
-        <animate attributeName="stop-color" values="#7F00FF;#FF00E5;#00F5FF;#7F00FF" dur="6s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#FF00E5">
-        <animate attributeName="stop-color" values="#FF00E5;#00F5FF;#7F00FF;#FF00E5" dur="6s" repeatCount="indefinite"/>
-      </stop>
-    </linearGradient>
-    <linearGradient id="cardBg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#161B22" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#0D1117" stop-opacity="0.75"/>
-    </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <clipPath id="clip">
-      <rect x="25" y="25" width="950" height="310" rx="28"/>
-    </clipPath>
     <style>
-      .h { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-weight: 900; letter-spacing: 5px; }
-      .m { font-family: 'Fira Code', Consolas, monospace; font-weight: 700; }
-      .s { font-family: 'Fira Code', Consolas, monospace; font-weight: 500; }
-      .label { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-weight: 800; letter-spacing: 1.5px; }
-    </style>
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&amp;family=Inter:wght@600;800;900&amp;display=swap');
+      .title { font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: -0.5px; }
+      .sub { font-family: 'Inter', sans-serif; font-weight: 600; }
+      .code { font-family: 'Fira Code', monospace; font-weight: 700; }
+    </style>    
+    <linearGradient id="borderGrad" x1="0" y1="0" x2="1000" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#58A6FF"/>
+      <stop offset="50%" stop-color="#BC8CFF"/>
+      <stop offset="100%" stop-color="#3FB950"/>
+    </linearGradient>
+    <radialGradient id="bgGlow" cx="0%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#1F6FEB" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0D1117" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="1000" height="360" rx="30" fill="url(#bg)"/>
-  <g clip-path="url(#clip)">
-    <circle cx="150" cy="90" r="140" fill="#00F5FF" opacity="0.08" filter="url(#softGlow)">
-      <animate attributeName="cx" values="150;850;150" dur="14s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.05;0.15;0.05" dur="6s" repeatCount="indefinite"/>
+  <rect width="1000" height="300" rx="16" fill="#0D1117"/>
+  <rect width="1000" height="300" rx="16" fill="url(#bgGlow)"/>
+  <rect width="1000" height="300" rx="16" fill="none" stroke="url(#borderGrad)" stroke-width="2"/>
+  <g transform="translate(850, 40)">
+    <rect width="90" height="28" rx="14" fill="#161B22" stroke="#30363D"/>
+    <circle cx="18" cy="14" r="4" fill="#3FB950" filter="url(#glowFilter)">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="850" cy="280" r="150" fill="#7F00FF" opacity="0.10" filter="url(#softGlow)">
-      <animate attributeName="cx" values="850;150;850" dur="15s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.06;0.18;0.06" dur="7s" repeatCount="indefinite"/>
-    </circle>
-    <path d="M40 270 C 200 190, 280 320, 450 240 S 750 180, 960 260" stroke="url(#neon)" stroke-width="2.5" opacity="0.4" fill="none" filter="url(#glow)">
-      <animate attributeName="d" values="M40 270 C 200 190, 280 320, 450 240 S 750 180, 960 260; M40 250 C 210 310, 300 180, 470 260 S 770 310, 960 220; M40 270 C 200 190, 280 320, 450 240 S 750 180, 960 260" dur="8s" repeatCount="indefinite"/>
-    </path>
-    <g opacity="0.7">
-      <circle cx="100" cy="80" r="2.5" fill="#00F5FF"><animate attributeName="cy" values="80;40;80" dur="4.5s" repeatCount="indefinite"/></circle>
-      <circle cx="280" cy="60" r="2" fill="#FF00E5"><animate attributeName="cy" values="60;110;60" dur="5.5s" repeatCount="indefinite"/></circle>
-      <circle cx="730" cy="75" r="2.5" fill="#00F5FF"><animate attributeName="cy" values="75;35;75" dur="4s" repeatCount="indefinite"/></circle>
-      <circle cx="920" cy="240" r="2" fill="#7F00FF"><animate attributeName="cy" values="240;290;240" dur="5s" repeatCount="indefinite"/></circle>
+    <text x="30" y="18" class="code" font-size="10" fill="#3FB950">ONLINE</text>
+  </g>
+  <text x="60" y="85" class="title" font-size="34" fill="#58A6FF" filter="url(#glowFilter)">Mueid Mursalin Rifat</text>
+  <text x="60" y="120" class="sub" font-size="16" fill="#8B949E">Creator of ShadowX-Bot • API Architect • Bangladesh 🇧🇩</text>
+  <g transform="translate(60, 160)">
+    <rect width="270" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
+    <text x="20" y="32" class="code" font-size="11" fill="#8B949E">MAIN PROJECT</text>
+    <text x="20" y="62" class="title" font-size="18" fill="#3FB950">ShadowX-Bot</text>
+  </g>
+  <g transform="translate(350, 160)">
+    <rect width="270" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
+    <text x="20" y="32" class="code" font-size="11" fill="#8B949E">SPECIALITY</text>
+    <text x="20" y="62" class="title" font-size="18" fill="#D29922">APIs &amp; Automation</text>
+  </g>
+  <g transform="translate(640, 160)">
+    <rect width="300" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
+    <text x="20" y="32" class="code" font-size="11" fill="#8B949E">PRIMARY STACK</text>
+    <g transform="translate(20, 44)">
+      <rect width="72" height="24" rx="6" fill="#238636" fill-opacity="0.2" stroke="#238636"/>
+      <text x="36" y="16" text-anchor="middle" class="code" font-size="11" fill="#3FB950">Node.js</text>
     </g>
-  </g>
-  <rect x="25" y="25" width="950" height="310" rx="28" fill="none" stroke="url(#neon)" stroke-width="2.5" filter="url(#glow)">
-    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
-  </rect>
-  <rect x="45" y="45" width="910" height="270" rx="20" fill="url(#cardBg)" stroke="#ffffff" stroke-opacity="0.08"/>
-  <text x="500" y="76" text-anchor="middle" class="h" font-size="22" fill="url(#neon)" filter="url(#glow)">SHADOWX-BOT</text>
-  <text x="500" y="98" text-anchor="middle" class="s" font-size="11" fill="#8B949E" letter-spacing="1">DEVELOPER by MUEID MURSALIN RIFAT • BANGLADESH 🇧🇩</text>
-  <g transform="translate(75, 122)">
-    <rect x="0" y="0" width="375" height="145" rx="14" fill="#050814" opacity="0.9" stroke="url(#neon)" stroke-width="1.5" filter="url(#glow)"/>
-    <circle cx="22" cy="20" r="5" fill="#FF5F56"/>
-    <circle cx="40" cy="20" r="5" fill="#FFBD2E"/>
-    <circle cx="58" cy="20" r="5" fill="#27C93F"/>
-    <text x="22" y="52" class="s" font-size="14" fill="#00F5FF">$ whoami</text>
-    <text x="22" y="78" class="m" font-size="17" fill="#FFFFFF" opacity="0">
-      Mueid Mursalin Rifat
-      <animate attributeName="opacity" values="0;1;1" dur="1.5s" repeatCount="1" fill="freeze"/>
-    </text>
-    <text x="22" y="106" class="s" font-size="13" fill="#38BDF8" opacity="0">
-      Bot Creator // API Architect
-      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3;0.5;1" dur="2.5s" repeatCount="1" fill="freeze"/>
-    </text>
-  </g>
-  <g transform="translate(480, 122)">
-    <rect x="0" y="0" width="445" height="145" rx="14" fill="#050814" opacity="0.8" stroke="#ffffff" stroke-opacity="0.08"/>
-    <text x="25" y="32" class="label" font-size="12" fill="#00F5FF">SPECIALITY</text>
-    <g transform="translate(0, 0)">
-      <text x="25" y="62" class="m" font-size="18" fill="#FFFFFF" opacity="0">
-        ShadowX-Bot Automation
-        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.08;0.30;0.38;1" dur="9s" repeatCount="indefinite"/>
-        <animateTransform attributeName="transform" type="translate" values="0 10;0 0;0 0;0 -10;0 -10" keyTimes="0;0.08;0.30;0.38;1" dur="9s" repeatCount="indefinite"/>
-      </text>
-      <text x="25" y="62" class="m" font-size="18" fill="#FFFFFF" opacity="0">
-        REST API Architecture
-        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.33;0.41;0.63;0.71;1" dur="9s" repeatCount="indefinite"/>
-        <animateTransform attributeName="transform" type="translate" values="0 10;0 10;0 0;0 0;0 -10;0 -10" keyTimes="0;0.33;0.41;0.63;0.71;1" dur="9s" repeatCount="indefinite"/>
-      </text>
-      <text x="25" y="62" class="m" font-size="18" fill="#FFFFFF" opacity="0">
-        Web Scraping &amp; Cloud Deployment
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.66;0.74;0.93;1" dur="9s" repeatCount="indefinite"/>
-        <animateTransform attributeName="transform" type="translate" values="0 10;0 10;0 0;0 0;0 -10" keyTimes="0;0.66;0.74;0.93;1" dur="9s" repeatCount="indefinite"/>
-      </text>
+    <g transform="translate(100, 44)">
+      <rect width="68" height="24" rx="6" fill="#1F6FEB" fill-opacity="0.2" stroke="#1F6FEB"/>
+      <text x="34" y="16" text-anchor="middle" class="code" font-size="11" fill="#58A6FF">Python</text>
     </g>
-    <text x="25" y="105" class="label" font-size="12" fill="#A855F7">PROJECT</text>
-    <text x="110" y="105" class="s" font-size="13" fill="#E2E8F0">Maintaining &amp; Deploying ShadowX-Bot</text>
-  </g>
-
-  <!-- Bottom Bar Metrics -->
-  <g transform="translate(85, 298)">
-    <text class="s" font-size="11" fill="#8B949E">ROLE:</text>
-    <text x="45" class="m" font-size="12" fill="#00F5FF" filter="url(#glow)">CREATOR</text>
-
-    <text x="140" class="s" font-size="11" fill="#8B949E">TECH STACK:</text>
-    <text x="225" class="m" font-size="12" fill="#A855F7" filter="url(#glow)">NODE.JS • PYTHON • RAILWAY</text>
-
-    <text x="530" class="s" font-size="11" fill="#8B949E">STATUS:</text>
-    <text x="590" class="m" font-size="12" fill="#00FF88" filter="url(#glow)">ACTIVE</text>
-    <circle cx="650" cy="-4" r="4.5" fill="#00FF88" filter="url(#glow)">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
-    </circle>
+    <g transform="translate(176, 44)">
+      <rect width="72" height="24" rx="6" fill="#8E44AD" fill-opacity="0.2" stroke="#8E44AD"/>
+      <text x="36" y="16" text-anchor="middle" class="code" font-size="11" fill="#BC8CFF">Railway</text>
+    </g>
   </g>
 </svg>
