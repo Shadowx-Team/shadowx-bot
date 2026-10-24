@@ -5,7 +5,8 @@
 ```console
 SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
 🛠️  Modified by MUEID MURSALIN RIFAT
-🟢  status: online   ⚡ engine: shadowx-fca   🐘 database: MongoDB · Neon · SQLite · JSON
+🟢  status: online   ⚡ engine: shadowx-fca
+🐘 database: MongoDB · Neon · SQLite · JSON
 ```
 <p align="center">
   <img src="./dashboard/images/shadowx.svg" alt="Mueid Mursalin Rifat" width="100%"/>
