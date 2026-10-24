@@ -3,10 +3,12 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D001A,50:7000FF,100:00D9FF&height=260&section=header&text=SHADOWX-BOT&fontSize=74&fontColor=FFFFFF&animation=fadeIn&fontAlignY=40&desc=Not%20Coded%20to%20Impress%20Coded%20to%20Express&descSize=20&descAlignY=62&descColor=FFD700" width="100%"/>
 
 ```console
-SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
-🛠️  Modified by MUEID MURSALIN RIFAT
-🟢  status: online ⚡ engine: shadowx-fca 
-🐘 database: MongoDB · Neon · SQLite · JSON 
+  🤖 SHADOWX-BOT `v1.5.35`
+
+> Facebook Messenger Automation Engine  
+> 🛠️ Modified by: MUEID MURSALIN RIFAT  
+> 🟢 Status: Online | ⚡ Engine: `shadowx-fca`
+> 🐘 Database: MongoDB · Neon · SQLite · JSON 
 ```
 <p align="center">
   <img src="./dashboard/images/shadowx.svg" alt="Mueid Mursalin Rifat" width="100%"/>
