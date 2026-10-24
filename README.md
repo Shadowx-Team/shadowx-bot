@@ -25,7 +25,7 @@ SHADOWX-BOT v1.5.35 ── Facebook Messenger Automation Engine
 </div>
 ---
 <p align="center">
-  <img src="./shadowx.svg" alt="Mueid Mursalin shadowx" width="100%"/>
+  <img src="./dashboard/images/shadowx.svg" alt="Mueid Mursalin Rifat" width="100%"/>
 </p>
 ---
 
