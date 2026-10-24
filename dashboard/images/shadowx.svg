@@ -6,8 +6,6 @@
       .sub { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-weight: 500; }
       .code { font-family: 'Fira Code', monospace; }
     </style>
-
-    <!-- Deep Glow Filters -->
     <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="4" result="blur"/>
       <feMerge>
@@ -15,59 +13,39 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-
     <filter id="orbBlur" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="60"/>
     </filter>
-
-    <!-- Moving Background Tech Grid -->
     <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.04">
         <animate attributeName="stroke-opacity" values="0.03;0.07;0.03" dur="4s" repeatCount="indefinite"/>
       </path>
     </pattern>
-
-    <!-- Linear Gradient for Orbiting Laser -->
     <linearGradient id="laserBeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#58A6FF" stop-opacity="0"/>
       <stop offset="50%" stop-color="#BC8CFF"/>
       <stop offset="100%" stop-color="#3FB950"/>
     </linearGradient>
-
-    <!-- Base Outer Border Gradient -->
     <linearGradient id="baseBorderGrad" x1="0" y1="0" x2="1000" y2="300" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#30363D"/>
       <stop offset="50%" stop-color="#21262D"/>
       <stop offset="100%" stop-color="#30363D"/>
     </linearGradient>
   </defs>
-
-  <!-- 1. Background Shell -->
   <rect width="1000" height="300" rx="18" fill="#090D13"/>
-
-  <!-- 2. Ambient Floating Glowing Orbs (Nebula Effect) -->
   <g>
-    <!-- Cyan / Blue Orb -->
     <circle cx="220" cy="90" r="130" fill="#1F6FEB" filter="url(#orbBlur)" opacity="0.25">
       <animateTransform attributeName="transform" type="translate" values="0,0; 50,30; -30,20; 0,0" dur="10s" repeatCount="indefinite"/>
     </circle>
-    <!-- Purple Orb -->
     <circle cx="820" cy="180" r="140" fill="#8957E5" filter="url(#orbBlur)" opacity="0.22">
       <animateTransform attributeName="transform" type="translate" values="0,0; -40,-30; 30,-20; 0,0" dur="12s" repeatCount="indefinite"/>
     </circle>
-    <!-- Green Orb -->
     <circle cx="500" cy="240" r="100" fill="#238636" filter="url(#orbBlur)" opacity="0.18">
       <animateTransform attributeName="transform" type="translate" values="0,0; -30,-40; 40,20; 0,0" dur="8s" repeatCount="indefinite"/>
     </circle>
   </g>
-
-  <!-- 3. Tech Grid Overlay -->
   <rect width="1000" height="300" rx="18" fill="url(#cyberGrid)"/>
-
-  <!-- 4. Subtle Ambient Card Vignette -->
   <rect width="1000" height="300" rx="18" fill="none" stroke="url(#baseBorderGrad)" stroke-width="1.5"/>
-
-  <!-- 5. Animated Orbiting Laser Border Beam -->
   <rect width="1000" height="300" rx="18" fill="none" 
         stroke="url(#laserBeamGrad)" 
         stroke-width="2.5" 
@@ -76,46 +54,28 @@
         filter="url(#laserGlow)">
     <animate attributeName="stroke-dashoffset" values="0; -2600" dur="7s" repeatCount="indefinite"/>
   </rect>
-
-  <!-- ================= TOP SECTION ================= -->
-
-  <!-- Terminal Path Header -->
   <g transform="translate(60, 48)">
     <text class="code" font-size="12" font-weight="500" fill="#58A6FF">~/mueid-mursalin <tspan fill="#8B949E">(main)</tspan> <tspan fill="#3FB950">$</tspan></text>
   </g>
-
-  <!-- Online Status Indicator (with Radar Pulse) -->
   <g transform="translate(850, 36)">
     <rect width="90" height="30" rx="15" fill="#161B22" stroke="#30363D" stroke-width="1.2"/>
-    <!-- Sonar Ping Wave -->
     <circle cx="18" cy="15" r="4" fill="none" stroke="#3FB950" stroke-width="1.5" opacity="1">
       <animate attributeName="r" values="4; 11" dur="2s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.9; 0" dur="2s" repeatCount="indefinite"/>
     </circle>
-    <!-- Solid Dot -->
     <circle cx="18" cy="15" r="4" fill="#3FB950" filter="url(#laserGlow)"/>
     <text x="32" y="19" class="code" font-size="10" font-weight="700" fill="#3FB950" letter-spacing="0.5">ONLINE</text>
   </g>
-
-  <!-- Main Name with Liquid Gradient Animation -->
   <text x="60" y="98" class="title" font-size="35" fill="#58A6FF" filter="url(#laserGlow)">
     Mueid Mursalin Rifat
     <animate attributeName="fill" values="#58A6FF; #BC8CFF; #3FB950; #58A6FF" dur="8s" repeatCount="indefinite"/>
   </text>
-
-  <!-- Blinking Terminal Caret Cursor -->
   <rect x="460" y="73" width="3" height="28" fill="#58A6FF" rx="1.5">
     <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
   </rect>
-
-  <!-- Subtitle Tagline -->
   <text x="60" y="130" class="sub" font-size="15" fill="#8B949E">
     Creator of <tspan fill="#E6EDF3" font-weight="600">ShadowX-Bot</tspan> • API Architect • Automation Engineer • Bangladesh 🇧🇩
   </text>
-
-  <!-- ================= CARDS SECTION ================= -->
-
-  <!-- Card 1: Main Project -->
   <g transform="translate(60, 165)">
     <rect width="270" height="92" rx="12" fill="#161B22" fill-opacity="0.8" stroke="#30363D" stroke-width="1">
       <animate attributeName="stroke" values="#30363D;#3FB950;#30363D" dur="5s" repeatCount="indefinite"/>
@@ -123,12 +83,9 @@
     <circle cx="25" cy="30" r="3" fill="#3FB950"/>
     <text x="36" y="34" class="code" font-size="10.5" font-weight="500" fill="#8B949E" letter-spacing="0.5">MAIN PROJECT</text>
     <text x="25" y="66" class="title" font-size="19" fill="#3FB950" filter="url(#laserGlow)">ShadowX-Bot</text>
-    <!-- Version Tag -->
     <rect x="180" y="50" width="46" height="20" rx="6" fill="#3FB950" fill-opacity="0.12" stroke="#3FB950" stroke-width="0.8"/>
     <text x="203" y="64" text-anchor="middle" class="code" font-size="9.5" fill="#3FB950">v2.0</text>
   </g>
-
-  <!-- Card 2: Speciality -->
   <g transform="translate(350, 165)">
     <rect width="270" height="92" rx="12" fill="#161B22" fill-opacity="0.8" stroke="#30363D" stroke-width="1">
       <animate attributeName="stroke" values="#30363D;#D29922;#30363D" dur="5s" begin="1.7s" repeatCount="indefinite"/>
@@ -137,28 +94,20 @@
     <text x="36" y="34" class="code" font-size="10.5" font-weight="500" fill="#8B949E" letter-spacing="0.5">SPECIALITY</text>
     <text x="25" y="66" class="title" font-size="18" fill="#F0883E">APIs &amp; Automation</text>
   </g>
-
-  <!-- Card 3: Stack Badges -->
   <g transform="translate(640, 165)">
     <rect width="300" height="92" rx="12" fill="#161B22" fill-opacity="0.8" stroke="#30363D" stroke-width="1">
       <animate attributeName="stroke" values="#30363D;#BC8CFF;#30363D" dur="5s" begin="3.4s" repeatCount="indefinite"/>
     </rect>
     <circle cx="25" cy="30" r="3" fill="#BC8CFF"/>
     <text x="36" y="34" class="code" font-size="10.5" font-weight="500" fill="#8B949E" letter-spacing="0.5">PRIMARY STACK</text>
-    
-    <!-- Node.js Badge -->
     <g transform="translate(22, 48)">
       <rect width="76" height="26" rx="6" fill="#238636" fill-opacity="0.15" stroke="#238636" stroke-width="1"/>
       <text x="38" y="17" text-anchor="middle" class="code" font-size="11" font-weight="700" fill="#3FB950">Node.js</text>
     </g>
-    
-    <!-- Python Badge -->
     <g transform="translate(106, 48)">
       <rect width="72" height="26" rx="6" fill="#1F6FEB" fill-opacity="0.15" stroke="#1F6FEB" stroke-width="1"/>
       <text x="36" y="17" text-anchor="middle" class="code" font-size="11" font-weight="700" fill="#58A6FF">Python</text>
     </g>
-
-    <!-- Railway Badge -->
     <g transform="translate(186, 48)">
       <rect width="76" height="26" rx="6" fill="#8E44AD" fill-opacity="0.15" stroke="#BC8CFF" stroke-width="1"/>
       <text x="38" y="17" text-anchor="middle" class="code" font-size="11" font-weight="700" fill="#BC8CFF">Railway</text>
