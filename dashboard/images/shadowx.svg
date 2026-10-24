@@ -2,19 +2,62 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&amp;family=Inter:wght@600;800;900&amp;display=swap');
+      
       .title { font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: -0.5px; }
       .sub { font-family: 'Inter', sans-serif; font-weight: 600; }
       .code { font-family: 'Fira Code', monospace; font-weight: 700; }
-    </style>    
+
+      /* Keyframe Animations */
+      @keyframes borderRotate {
+        0% { x1: 0px; y1: 0px; x2: 1000px; y2: 300px; }
+        50% { x1: 1000px; y1: 0px; x2: 0px; y2: 300px; }
+        100% { x1: 0px; y1: 0px; x2: 1000px; y2: 300px; }
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.12; transform: scale(1); }
+        50% { opacity: 0.25; transform: scale(1.05); }
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes badgeHover {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+      }
+
+      .animated-bg { animation: pulseGlow 6s ease-in-out infinite; transform-origin: center; }
+      .fade-1 { animation: fadeInUp 0.8s ease-out forwards; }
+      .fade-2 { animation: fadeInUp 0.8s ease-out 0.3s forwards; opacity: 0; }
+      .fade-card-1 { animation: fadeInUp 0.8s ease-out 0.5s forwards; opacity: 0; }
+      .fade-card-2 { animation: fadeInUp 0.8s ease-out 0.7s forwards; opacity: 0; }
+      .fade-card-3 { animation: fadeInUp 0.8s ease-out 0.9s forwards; opacity: 0; }
+
+      .badge-1 { animation: badgeHover 3s ease-in-out infinite; }
+      .badge-2 { animation: badgeHover 3s ease-in-out 1s infinite; }
+      .badge-3 { animation: badgeHover 3s ease-in-out 2s infinite; }
+    </style>
+    
     <linearGradient id="borderGrad" x1="0" y1="0" x2="1000" y2="300" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#58A6FF"/>
-      <stop offset="50%" stop-color="#BC8CFF"/>
-      <stop offset="100%" stop-color="#3FB950"/>
+      <stop offset="0%" stop-color="#58A6FF">
+        <animate attributeName="stop-color" values="#58A6FF;#BC8CFF;#3FB950;#58A6FF" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#BC8CFF">
+        <animate attributeName="stop-color" values="#BC8CFF;#3FB950;#58A6FF;#BC8CFF" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#3FB950">
+        <animate attributeName="stop-color" values="#3FB950;#58A6FF;#BC8CFF;#3FB950" dur="8s" repeatCount="indefinite"/>
+      </stop>
     </linearGradient>
+
     <radialGradient id="bgGlow" cx="0%" cy="0%" r="80%">
-      <stop offset="0%" stop-color="#1F6FEB" stop-opacity="0.15"/>
+      <stop offset="0%" stop-color="#1F6FEB" stop-opacity="0.3"/>
       <stop offset="100%" stop-color="#0D1117" stop-opacity="0"/>
     </radialGradient>
+
     <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="4" result="blur"/>
       <feMerge>
@@ -23,40 +66,65 @@
       </feMerge>
     </filter>
   </defs>
+
+  <!-- Card Background -->
   <rect width="1000" height="300" rx="16" fill="#0D1117"/>
-  <rect width="1000" height="300" rx="16" fill="url(#bgGlow)"/>
-  <rect width="1000" height="300" rx="16" fill="none" stroke="url(#borderGrad)" stroke-width="2"/>
-  <g transform="translate(850, 40)">
+  <rect class="animated-bg" width="1000" height="300" rx="16" fill="url(#bgGlow)"/>
+  <rect width="1000" height="300" rx="16" fill="none" stroke="url(#borderGrad)" stroke-width="2.5"/>
+
+  <!-- Status Indicator (Top Right) -->
+  <g transform="translate(850, 40)" class="fade-1">
     <rect width="90" height="28" rx="14" fill="#161B22" stroke="#30363D"/>
     <circle cx="18" cy="14" r="4" fill="#3FB950" filter="url(#glowFilter)">
-      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.2;1" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="4;5.5;4" dur="1.8s" repeatCount="indefinite"/>
     </circle>
     <text x="30" y="18" class="code" font-size="10" fill="#3FB950">ONLINE</text>
   </g>
-  <text x="60" y="85" class="title" font-size="34" fill="#58A6FF" filter="url(#glowFilter)">Mueid Mursalin Rifat</text>
-  <text x="60" y="120" class="sub" font-size="16" fill="#8B949E">Creator of ShadowX-Bot • API Architect • Bangladesh 🇧🇩</text>
-  <g transform="translate(60, 160)">
+
+  <!-- Header Info -->
+  <g class="fade-1">
+    <text x="60" y="85" class="title" font-size="34" fill="#58A6FF" filter="url(#glowFilter)">
+      Mueid Mursalin Rifat
+      <animate attributeName="fill" values="#58A6FF;#7EE787;#D2A8FF;#58A6FF" dur="10s" repeatCount="indefinite"/>
+    </text>
+  </g>
+  
+  <text x="60" y="120" class="sub fade-2" font-size="16" fill="#8B949E">Creator of ShadowX-Bot • API Architect • Bangladesh 🇧🇩</text>
+
+  <!-- Metric Card 1: Main Project -->
+  <g transform="translate(60, 160)" class="fade-card-1">
     <rect width="270" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
     <text x="20" y="32" class="code" font-size="11" fill="#8B949E">MAIN PROJECT</text>
-    <text x="20" y="62" class="title" font-size="18" fill="#3FB950">ShadowX-Bot</text>
+    <text x="20" y="62" class="title" font-size="18" fill="#3FB950" filter="url(#glowFilter)">ShadowX-Bot</text>
   </g>
-  <g transform="translate(350, 160)">
+
+  <!-- Metric Card 2: Speciality -->
+  <g transform="translate(350, 160)" class="fade-card-2">
     <rect width="270" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
     <text x="20" y="32" class="code" font-size="11" fill="#8B949E">SPECIALITY</text>
     <text x="20" y="62" class="title" font-size="18" fill="#D29922">APIs &amp; Automation</text>
   </g>
-  <g transform="translate(640, 160)">
+
+  <!-- Metric Card 3: Stack Badges -->
+  <g transform="translate(640, 160)" class="fade-card-3">
     <rect width="300" height="90" rx="10" fill="#161B22" stroke="#30363D"/>
     <text x="20" y="32" class="code" font-size="11" fill="#8B949E">PRIMARY STACK</text>
-    <g transform="translate(20, 44)">
+    
+    <!-- Node.js Badge -->
+    <g transform="translate(20, 44)" class="badge-1">
       <rect width="72" height="24" rx="6" fill="#238636" fill-opacity="0.2" stroke="#238636"/>
       <text x="36" y="16" text-anchor="middle" class="code" font-size="11" fill="#3FB950">Node.js</text>
     </g>
-    <g transform="translate(100, 44)">
+    
+    <!-- Python Badge -->
+    <g transform="translate(100, 44)" class="badge-2">
       <rect width="68" height="24" rx="6" fill="#1F6FEB" fill-opacity="0.2" stroke="#1F6FEB"/>
       <text x="34" y="16" text-anchor="middle" class="code" font-size="11" fill="#58A6FF">Python</text>
     </g>
-    <g transform="translate(176, 44)">
+
+    <!-- Railway Badge -->
+    <g transform="translate(176, 44)" class="badge-3">
       <rect width="72" height="24" rx="6" fill="#8E44AD" fill-opacity="0.2" stroke="#8E44AD"/>
       <text x="36" y="16" text-anchor="middle" class="code" font-size="11" fill="#BC8CFF">Railway</text>
     </g>
