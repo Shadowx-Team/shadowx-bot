@@ -22,6 +22,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
+    "discord-image-generation": "^1.4.25",
     "discord-image-generation-v2": "^1.0.7",
     "duplexify": "^4.1.3",
     "express": "^4.21.1",

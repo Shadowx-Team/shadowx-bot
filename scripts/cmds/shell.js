@@ -1,41 +1,50 @@
-const { exec } = require('child_process');
+const { exec } = require("child_process");
 
 module.exports = {
   config: {
     name: "shell",
-    version: "1.0",
-    author: "Samir",
+    aliases: ["sh"],
+    version: "2.0",
+    author: "Samir | Fahad Islam ",
     countDown: 5,
-    role: 2,
-    shortDescription: "Execute shell commands",
-    longDescription: "",
+    role: 0,
+    shortDescription: "Run terminal commands",
+    longDescription: "Execute shell/terminal commands directly from the bot (owner only)",
     category: "owner",
-    guide: {
-      vi: "{p}{n} <command>",
-      en: "{p}{n} <command>"
-    }
+    guide: "{pn} full guide dio"
   },
 
-  onStart: async function ({ args, message }) {
-    const command = args.join(" ");
-
-    if (!command) {
-      return message.reply("Please provide a command to execute.");
+  onStart: async function ({ message, event, args }) {
+    const authorized = ["100004924009085"]; 
+    if (!authorized.includes(event.senderID)) {
+      return message.reply("⛔ | Oops! Only my master can whisper commands into my system... 💻💋");
     }
 
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error executing command: ${error}`);
-        return message.reply(`An error occurred while executing the command: ${error.message}`);
-      }
+    const command = args.join(" ");
+    if (!command) {
+      return message.reply("❗ | Please provide a shell command to execute, babe.");
+    }
 
-      if (stderr) {
-        console.error(`Command execution resulted in an error: ${stderr}`);
-        return message.reply(`Command execution resulted in an error: ${stderr}`);
-      }
+    message.reply(`🕰️ | Running your command, darling...`).then(() => {
+      exec(command, (error, stdout, stderr) => {
+        let output = "";
 
-      console.log(`Command executed successfully:\n${stdout}`);
-      message.reply(`Command executed successfully:\n${stdout}`);
+        if (error) output += `❌ | Error:\n${error.message}\n`;
+        if (stderr) output += `⚠️ | Stderr:\n${stderr}\n`;
+        if (stdout) output += `✅ | Output:\n${stdout}`;
+
+        if (output.length > 1999) {
+          message.reply("📦 | Output too long, sending as file...");
+          const fs = require("fs");
+          const path = __dirname + "/output.txt";
+          fs.writeFileSync(path, output);
+          message.reply({ body: "📄 Here's your result:", attachment: fs.createReadStream(path) }, () => {
+            fs.unlinkSync(path);
+          });
+        } else {
+          message.reply(output || "📭 | No output received.");
+        }
+      });
     });
   }
 };

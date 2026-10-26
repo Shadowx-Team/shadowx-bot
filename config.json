@@ -17,32 +17,31 @@
     "ignoreCommand": []
   },
   "typingIndicator": {
-    "enable": true,
+    "enable": false,
     "duration": 2000
   },
   "reactionMirror": {
-    "enable": true
+    "enable": false
   },
   "adminBot": [
-    "100051869042398",
-    "61593874546929",
-    "61593683823942",
-    "100004924009085"
+    "100004924009085",
+    "100068594614204",
+    "61584137781788",
+    "61586382867093"
   ],
   "devUsers": [
-    "100051869042398",
-    "61590594545013"
+    "100004924009085",
+    "100068594614204",
+    "61584137781788"
   ],
   "premiumUsers": [
-    "100051869042398"
+    "100004924009085",
+    "100068594614204",
+    "61584137781788"
   ],
   "reactBy": {
     "delete": [
-      "🗑️",
-      "❌",
-      "😠",
-      "😡",
-      "😾"
+      "😠"
     ],
     "kick": [
       "🦵"
@@ -59,8 +58,13 @@
   },
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": [],
-    "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
+    "whiteListIds": []
+  },
+  "whiteListModeThread": {
+    "enable": true,
+    "whiteListThreadIds": [
+      "1479539013096451"
+    ]
   },
   "nickNameBot": "Eshita🎀",
   "prefix": ".",

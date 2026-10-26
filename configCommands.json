@@ -12,8 +12,7 @@
       }
     },
     "notification": {
-      "delayPerGroup": 250,
-      "enableConfirmation": true
+      "delayPerGroup": 250
     },
     "rank": {
       "deltaNext": 5
@@ -29,6 +28,9 @@
     },
     "antiout": {
       "deltaNext": 5
+    },
+    "count": {
+      "ACCESS_TOKEN": "6628568379%7Cc1e620fa708a1d5696fb991c1bde5662"
     }
   },
   "envEvents": {
