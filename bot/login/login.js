@@ -405,7 +405,7 @@ for (const line of title) {
 const sub = [
   `SHADOWX-BOT-@${currentVersion} - Unleash a war-grade Messenger war machine from a personal account`,
   "Forged by NTKhang | Modified by MUEID MURSALIN RIFAT",
-  "GITHUB: https://github.com/mueidmursalinrifat",
+  "GITHUB: https://github.com/Shadowx-Team/shadowx-bot",
   "ANY COPY NOT BORN FROM THIS REPO IS A COUNTERFEIT CORPSE"
 ];
 
