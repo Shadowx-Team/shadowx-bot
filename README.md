@@ -363,16 +363,6 @@ root@shadowx:~$ ./shadowx-bot --version
   📜 license  MIT
 ```
 
-| Field | Value |
-|----|:---:|---|
-| 📦 GitHub | [Shadowx-Team/shadowx-bot](https://github.com/Shadowx-Team/shadowx-bot) |
-| ⚡ Engine | shadowx-fca |
-| 🟢 Runtime | Node.js 22.x |
-| 🐘 Database | MongoDB, Neon, SQLite, JSON |
-| 📜 License | MIT |
-
-<div align="center">
-
 **Not coded to impress, coded to express.**
 
 *Mueid Mursalin Rifat*
