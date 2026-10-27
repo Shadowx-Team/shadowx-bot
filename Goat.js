@@ -1,7 +1,7 @@
 /**
  * @author NTKhang (original), maintained by mueid mursalin rifat
  * ! The source code is written by NTKhang, please don't change the author's name everywhere. Thank you for using
- * ! Official source code: https://github.com/mueidmursalinrifat
+ * ! Official source code: https://github.com/Shadowx-Team/shadowx-bot/
  * ! If you do not download the source code from the above address, you are using an unknown version and at risk of having your account hacked
  */
 
@@ -246,7 +246,7 @@ if (config.autoRestart) {
 	}
 
 	try {
-		const rawData = (await axios.get("https://raw.githubusercontent.com/mueidmursalinrifat/GOAT-BOT-UPDATED/main/package.json")).data;
+		const rawData = (await axios.get("https://raw.githubusercontent.com/Shadowx-Team/shadowx-bot/main/package.json")).data;
 		const { version } = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
 		const currentVersion = require("./package.json").version;
 		if (compareVersion(version, currentVersion) === 1)
