@@ -21,13 +21,13 @@
 
 <br>
 
-<a href="https://github.com/mueidmursalinrifat/shadowx-bot.git"><img src="https://img.shields.io/github/stars/yeasin121212/shadowx-bot?style=for-the-badge&logo=github&label=STARS&color=7000FF" alt="Stars"></a>
-<a href="https://github.com/mueidmursalinrifat/shadowx-bot.git"><img src="https://img.shields.io/github/last-commit/mueidmursalinrifat/shadowx-bot?style=for-the-badge&logo=github&label=LAST%20UPDATE&color=FFD700" alt="Last Commit"></a>
-<a href="https://github.com/mueidmursalinrifat/shadowx-bot/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-7000FF?style=for-the-badge" alt="License"></a>
+<a href="https://github.com/Shadowx-Team/shadowx-bot.git"><img src="https://img.shields.io/github/stars/Shadowx-Team/shadowx-bot?style=for-the-badge&logo=github&label=STARS&color=7000FF" alt="Stars"></a>
+<a href="https://github.com/Shadowx-Team/shadowx-bot.git"><img src="https://img.shields.io/github/last-commit/Shadowx-Team/shadowx-bot?style=for-the-badge&logo=github&label=LAST%20UPDATE&color=FFD700" alt="Last Commit"></a>
+<a href="https://github.com/Shadowx-Team/shadowx-bot/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-7000FF?style=for-the-badge" alt="License"></a>
 <img src="https://img.shields.io/badge/NODE-22.x-00D9FF?style=for-the-badge&logo=node.js&logoColor=white" alt="Node 22">
 <img src="https://img.shields.io/badge/ENGINE-shadowx--fca-7000FF?style=for-the-badge" alt="shadowx-fca">
 
-📦 [Repository](https://github.com/mueidmursalinrifat/shadowx-bot)
+📦 [Repository](https://github.com/Shadowx-Team/shadowx-bot)
 
 </div>
 ---
@@ -233,7 +233,7 @@ Credentials load from `account.txt`, `account2.txt`, and `account3.txt`. The bot
 ## 📥 Install
 
 ```console
-git clone https://github.com/mueidmursalinrifat/shadowx-bot.git
+git clone https://github.com/Shadowx-Team/shadowx-bot.git
 cd shadowx-bot
 npm install
 ```
@@ -350,14 +350,6 @@ root@shadowx:~$ ./shadowx-bot --connect
 [ OK ] all connections established
 ```
 
-```
-📦 GitHub: https://github.com/mueidmursalinrifat/shadowx-bot.git
-```
-
-Star, fork, report bugs, suggest features, or send improvements.
-
----
-
 ## 🎨 Identity
 
 ```console
@@ -373,7 +365,7 @@ root@shadowx:~$ ./shadowx-bot --version
 
 | Field | Value |
 |----|:---:|---|
-| 📦 GitHub | [mueidmursalinrifat/shadowx-bot](https://github.com/mueidmursalinrifat/shadowx-bot) |
+| 📦 GitHub | [Shadowx-Team/shadowx-bot](https://github.com/Shadowx-Team/shadowx-bot) |
 | ⚡ Engine | shadowx-fca |
 | 🟢 Runtime | Node.js 22.x |
 | 🐘 Database | MongoDB, Neon, SQLite, JSON |
@@ -385,7 +377,7 @@ root@shadowx:~$ ./shadowx-bot --version
 
 *Mueid Mursalin Rifat*
 
-<a href="https://github.com/mueidmursalinrifat/shadowx-bot"><img src="https://img.shields.io/badge/GITHUB-7000FF?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+<a href="https://github.com/Shadowx-Team/shadowx-bot"><img src="https://img.shields.io/badge/GITHUB-7000FF?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00D9FF,50:7000FF,100:0D001A&height=140&section=footer" width="100%">
 
