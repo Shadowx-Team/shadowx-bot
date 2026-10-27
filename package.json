@@ -1,6 +1,6 @@
 {
   "name": "SHADOWX-BOT",
-  "version": "1.5.35",
+  "version": "2.5.00",
   "description": "A war-grade Messenger automation engine driven by a personal account. Modified by MUEID MURSALIN RIFAT.",
   "main": "index.js",
   "engines": {
@@ -62,6 +62,7 @@
     "request": "^2.88.2",
     "sequelize": "^6.37.8",
     "shadowx-fca": "^10.8.0",
+    "shadowx-dlp": "^2026.8.20",
     "socket.io": "^4.5.1",
     "sqlite3": "^5.0.2",
     "stream": "^0.0.3",
