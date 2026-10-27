@@ -25,13 +25,13 @@ module.exports = {
   },
 
   onStart: async function ({ message, getLang }) {
-    const link = "https://github.com/mueidmursalinrifat/shadowx-bot";
+    const link = "https://github.com/Shadowx-Team/shadowx-bot/";
     return message.reply(getLang("current", link));
   },
 
   onChat: async function ({ message, getLang, event }) {
     if (event.body && event.body.toLowerCase() === "fork") {
-      const link = "https://github.com/mueidmursalinrifat/shadowx-bot";
+      const link = "https://github.com/Shadowx-Team/shadowx-bot/";
       return message.reply(getLang("current", link));
     }
   }
