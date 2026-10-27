@@ -61,7 +61,7 @@
     "whiteListIds": []
   },
   "whiteListModeThread": {
-    "enable": true,
+    "enable": false,
     "whiteListThreadIds": [
       "1479539013096451"
     ]
@@ -192,6 +192,6 @@
     "selfListenEvent": true,
     "autoMarkDelivery": true,
     "autoReconnect": true,
-    "notes": "Document here: https://github.com/ntkhang03/fb-chat-api/blob/master/DOCS.md#apisetoptionsoptions "
+    "notes": "Document here: https://github.com/Shadowx-Team/shadowx-bot"
   }
 }
