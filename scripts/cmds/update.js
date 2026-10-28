@@ -28,11 +28,11 @@ module.exports = {
 
 	langs: {
 		vi: {
-			noUpdates: "✅ | Bạn đang sử dụng phiên bản mới nhất của GOAT-BOT-UPDATED (v%1).",
+			noUpdates: "✅ | Bạn đang sử dụng phiên bản mới nhất của shadowx-bot (v%1).",
 			updatePrompt: "💫 | Bạn đang sử dụng phiên bản %1. Hiện tại đã có phiên bản %2. Bạn có muốn cập nhật chatbot lên phiên bản mới nhất không?"
 				+ "\n\n⬆️ | Các tệp sau sẽ được cập nhật:"
 				+ "\n%3%4"
-				+ "\n\nℹ️ | Xem chi tiết tại https://github.com/goatbotnx/GOAT-BOT-UPDATED/commits/main"
+				+ "\n\nℹ️ | Xem chi tiết tại https://github.com/Shadowx-Team/shadowx-bot/commits/main"
 				+ "\n💡 | Thả cảm xúc bất kỳ vào tin nhắn này để xác nhận",
 			fileWillDelete: "\n🗑️ | Các tệp/thư mục sau sẽ bị xóa:\n%1",
 			andMore: " ...và %1 tệp khác",
@@ -42,11 +42,11 @@ module.exports = {
 			botWillRestart: "🔄 | Bot sẽ khởi động lại ngay!"
 		},
 		en: {
-			noUpdates: "✅ | You are using the latest version of GOAT-BOT-UPDATED (v%1).",
+			noUpdates: "✅ | You are using the latest version of shadowx-bot (v%1).",
 			updatePrompt: "💫 | You are using version %1. There is a new version %2. Do you want to update the chatbot to the latest version?"
 				+ "\n\n⬆️ | The following files will be updated:"
 				+ "\n%3%4"
-				+ "\n\nℹ️ | See details at https://github.com/goatbotnx/GOAT-BOT-UPDATED/commits/main"
+				+ "\n\nℹ️ | See details at https://github.com/Shadowx-Team/shadowx-bot/commits/main"
 				+ "\n💡 | React to this message to confirm.",
 			fileWillDelete: "\n🗑️ | The following files/folders will be deleted:\n%1",
 			andMore: " ...and %1 more files",
@@ -71,8 +71,8 @@ module.exports = {
 
 		let packageData, versions;
 		try {
-			packageData = parseJSON((await githubGet("https://raw.githubusercontent.com/goatbotnx/GOAT-BOT-UPDATED/main/package.json")).data);
-			versions = parseJSON((await githubGet("https://raw.githubusercontent.com/goatbotnx/GOAT-BOT-UPDATED/main/versions.json")).data);
+			packageData = parseJSON((await githubGet("https://raw.githubusercontent.com/Shadowx-Team/shadowx-bot/main/package.json")).data);
+			versions = parseJSON((await githubGet("https://raw.githubusercontent.com/Shadowx-Team/shadowx-bot/main/versions.json")).data);
 		} catch (e) {
 			if (e.response?.status === 403)
 				return message.reply("⚠️ GitHub API rate limit reached. Please try again later, or set \"githubToken\" in config.json to raise the limit.");
@@ -134,7 +134,7 @@ module.exports = {
 
 		let lastCommit;
 		try {
-			lastCommit = (await githubGet('https://api.github.com/repos/goatbotnx/GOAT-BOT-UPDATED/commits/main')).data;
+			lastCommit = (await githubGet('https://api.github.com/repos/Shadowx-Team/shadowx-bot/commits/main')).data;
 		} catch (e) {
 			if (e.response?.status === 403)
 				return message.reply("⚠️ GitHub API rate limit reached (this happens without a token — only 60 requests/hour are allowed). Please try again later, or set \"githubToken\" in config.json to raise the limit.");
