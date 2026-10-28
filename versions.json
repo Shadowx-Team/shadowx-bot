@@ -238,4 +238,10 @@
       "fb-chat-api/index.js": "fix: fca not working",
       "fb-chat-api/src/listenMqtt.js": "fix: fca not working"
     }
+  },
+  {
+    "version": "2.5.00",
+    "files": {
+      "package.json": "all updated"
+    }
   }
