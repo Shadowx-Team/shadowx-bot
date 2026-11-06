@@ -109,7 +109,8 @@ const TASKS_CONFIG = [
   { id: 12, title: "Dice Play", sub: "Play Dice 25 times", target: 25, reward: 2000000, rewardTxt: "2M", type: "dice", tag: "GAME" },
   { id: 13, title: "Cartoon Play", sub: "Play Cartoon 25 times", target: 25, reward: 2000000, rewardTxt: "2M", type: "cartoon", tag: "GAME" },
   { id: 14, title: "Completionist", sub: "Claim all 14 daily missions", target: 14, reward: 5000000, rewardTxt: "5M", type: "completionist", tag: "SPECIAL" },
-  { id: 15, title: "spin", sub: "Play spin 25 times", target: 25, reward: 2000000, rewardTxt: "2M", type: "spin", tag: "GAME" }
+  { id: 15, title: "spin", sub: "Play spin 25 times", target: 25, reward: 2000000, rewardTxt: "2M", type: "spin", tag: "GAME" },
+  { id: 16, title: "casino", sub: "Play casino 25 times", target: 25, reward: 2000000, rewardTxt: "2M", type: "casino", tag: "GAME" }
 ];
 const FILE_CMDS = {
   "slot": "slot",
@@ -123,7 +124,8 @@ const FILE_CMDS = {
   "actor": "actor",
   "flag": "flag",
   "dice": "dice",
-  "cartoon": "cartoon"
+  "cartoon": "cartoon",
+  "casino": "casino"
 };
 async function handleTaskProgress(event, usersData) {
   if (!event.senderID || !event.body) return;
@@ -470,4 +472,4 @@ function drawGlowCircle(ctx, x, y, radius, color) {
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
-}
+   }
