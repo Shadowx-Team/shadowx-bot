@@ -69,48 +69,6 @@ function replaceShortcutInLang(text, prefix, commandName) {
         .replace(/\{pn\}/g, `${prefix}${commandName}`);
 }
 
-function levenshteinDistance(str1, str2) {
-    const len1 = str1.length;
-    const len2 = str2.length;
-    const matrix = [];
-
-    for (let i = 0; i <= len1; i++) {
-        matrix[i] = [i];
-    }
-
-    for (let j = 0; j <= len2; j++) {
-        matrix[0][j] = j;
-    }
-
-    for (let i = 1; i <= len1; i++) {
-        for (let j = 1; j <= len2; j++) {
-            const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-            matrix[i][j] = Math.min(
-                matrix[i - 1][j] + 1,
-                matrix[i][j - 1] + 1,
-                matrix[i - 1][j - 1] + cost
-            );
-        }
-    }
-
-    return matrix[len1][len2];
-}
-
-function findSimilarCommands(commandName, limit = 1) {
-    const allCommands = Array.from(global.GoatBot.commands.keys());
-    const allAliases = Array.from(global.GoatBot.aliases.keys());
-    const allCommandNames = [...allCommands, ...allAliases];
-
-    const similarities = allCommandNames.map(cmd => ({
-        name: cmd,
-        distance: levenshteinDistance(commandName.toLowerCase(), cmd.toLowerCase())
-    }));
-
-    similarities.sort((a, b) => a.distance - b.distance);
-
-    return similarities.slice(0, limit).filter(s => s.distance <= 3).map(s => s.name);
-}
-
 function getRoleConfig(utils, command, isGroup, threadData, commandName) {
     let roleConfig;
     if (utils.isNumber(command.config.role)) {
@@ -290,13 +248,12 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 
             const mentions = event.mentions || {};
             const mentionIDs = Object.keys(mentions);
-            
+
             if (mentionIDs.length > 0) {
                 event.mentions = mentions;
             } else if (event.messageReply && event.messageReply.senderID) {
                 event.mentions = { [event.messageReply.senderID]: "" };
             } else {
-                // FALLBACK: Try to resolve the first tag like @Arisa by looking up group members
                 const tagMatch = body.match(/@([^ ]+)/);
                 if (tagMatch) {
                     const tagName = tagMatch[1].toLowerCase();
@@ -304,13 +261,11 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
                     const userInfo = info.userInfo || [];
                     const nicknames = info.nicknames || {};
 
-                    // 1. Try nickname match
                     let foundID = Object.keys(nicknames).find(id => nicknames[id].toLowerCase().includes(tagName));
-                    
-                    // 2. Try name/firstName match
+
                     if (!foundID) {
-                        const user = userInfo.find(u => 
-                            (u.name && u.name.toLowerCase().includes(tagName)) || 
+                        const user = userInfo.find(u =>
+                            (u.name && u.name.toLowerCase().includes(tagName)) ||
                             (u.firstName && u.firstName.toLowerCase().includes(tagName))
                         );
                         if (user) foundID = user.id;
@@ -372,17 +327,72 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
                         return await message.reply(
                             utils.getText({ lang: langCode, head: "handlerEvents" }, "onlyPrefix", prefix)
                         );
-                    } else {
-                        const similarCommands = findSimilarCommands(commandName);
-                        if (similarCommands.length > 0) {
-                            return await message.reply(
-                                utils.getText({ lang: langCode, head: "handlerEvents" }, "commandNotFoundWithSuggestion", commandName, prefix, similarCommands.join(", "))
-                            );
-                        } else {
-                            return await message.reply(
-                                utils.getText({ lang: langCode, head: "handlerEvents" }, "commandNotFound", commandName, prefix)
-                            );
+                    }
+                    else {
+                        function getCachedCommandNames() {
+                            const cmdCount = GoatBot.commands.size;
+                            const aliasCount = GoatBot.aliases.size;
+                            const cache = GoatBot._cmdNameCache || {};
+                            if (!cache.list || cache.cmdCount !== cmdCount || cache.aliasCount !== aliasCount) {
+                                const list = [...GoatBot.commands.keys(), ...GoatBot.aliases.keys()];
+                                GoatBot._cmdNameCache = {
+                                    list,
+                                    lower: list.map(s => s.toLowerCase()),
+                                    cmdCount,
+                                    aliasCount
+                                };
+                            }
+                            return GoatBot._cmdNameCache;
                         }
+
+                        const { list, lower } = getCachedCommandNames();
+                        const input = commandName.toLowerCase();
+
+                        let index = lower.findIndex(n => n.startsWith(input));
+                        let bestMatch = index !== -1 ? list[index] : null;
+
+                        if (!bestMatch) {
+                            function editDistance(a, b) {
+                                const m = a.length, n = b.length;
+                                if (Math.abs(m - n) > 2) return 99;
+                                const dp = Array.from({ length: m + 1 }, (_, i) => i);
+                                for (let j = 1; j <= n; j++) {
+                                    let prev = j - 1;
+                                    let cur = j;
+                                    for (let i = 1; i <= m; i++) {
+                                        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                                        const tmp = Math.min(
+                                            dp[i] + 1,
+                                            cur + 1,
+                                            dp[i - 1] + cost
+                                        );
+                                        dp[i - 1] = prev;
+                                        prev = tmp;
+                                        cur = tmp;
+                                    }
+                                    dp[m] = cur;
+                                }
+                                return dp[m];
+                            }
+                            let best = { name: null, dist: 3 };
+                            for (let i = 0; i < lower.length; i++) {
+                                const name = lower[i];
+                                if (Math.abs(name.length - input.length) > 2) continue;
+                                const d = editDistance(input, name);
+                                if (d < best.dist) {
+                                    best = { name: list[i], dist: d };
+                                    if (d === 0) break;
+                                }
+                            }
+                            if (best.dist <= 2) bestMatch = best.name;
+                        }
+
+                        let suggestionMsg = utils.getText({ lang: langCode, head: "handlerEvents" }, "commandNotFound", commandName, prefix);
+                        if (bestMatch) {
+                            suggestionMsg += ` Dɪᴅ Yᴏᴜ Mᴇᴀɴ : ${prefix}${bestMatch}`;
+                        }
+
+                        return await message.reply(suggestionMsg);
                     }
                 }
                 return;
@@ -460,9 +470,9 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
                 if (!hasEnoughMoney) {
                     const userMoney = userData.money || 0;
                     return await message.reply(
-                        `⚠ | You need at least $${requiredMoney} to use this command.\n` +
+                        `You need at least $${requiredMoney} to use this command.\n` +
                         `Your balance: $${userMoney}\n` +
-                        `You need $${requiredMoney - userMoney} more.`
+                        `Missing: $${requiredMoney - userMoney}`
                     );
                 }
             }
@@ -757,7 +767,6 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
         }
 
         async function onReaction() {
-            // Mirror system: if a bot admin reacts to ANY message, the bot reacts the same way
             if (
                 config.reactionMirror?.enable !== false &&
                 event.reaction && senderID != api.getCurrentUserID() && isAdmin(senderID)
@@ -901,15 +910,12 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
         }
 
         async function presence() {
-            // Your code here
         }
 
         async function read_receipt() {
-            // Your code here
         }
 
         async function typ() {
-            // Your code here
         }
 
         return {
@@ -926,5 +932,4 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
             typ
         };
     };
-
 };
